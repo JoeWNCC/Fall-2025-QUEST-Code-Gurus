@@ -1,2 +1,4 @@
-# Week 4 Code Gurus
-Joe's week 4 code gurus project.
+### Started by Joe Scott
+
+The big project idea here is:
+blank
