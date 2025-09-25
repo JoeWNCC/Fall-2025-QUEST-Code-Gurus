@@ -328,5 +328,3 @@ def ruins():
 
 def sanctum():
     print(utils.UnderLN("Sanctum"))
-
-drab_town()
