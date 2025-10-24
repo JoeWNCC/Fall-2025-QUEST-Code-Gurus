@@ -17,7 +17,7 @@ sleep(3)
 
 # ----- VARIABLES ----- #
 # Weapons
-sword = 0
+sword = 1
 Scary_axe = 0
 
 # Trinkets/Items
@@ -38,6 +38,7 @@ Ally = "To be decided"
 Stalked = False
 Focus = False
 chance = 0
+lives = 3
 
 Player_Name = "Knight Guy"
 
@@ -53,20 +54,12 @@ else:
 # 50%
 def chance_50():
     random = randint(1, 2)
-    if random == 1:
-        chance = random
-    elif random == 2:
-        chance = random
-    return chance
+    return random
 
 # 75%
 def chance_75():
     random = randint(1, 4)
-    if random == 1 or 2 or 3:
-        chance = random
-    elif random == 4:
-        chance = random
-    return chance
+    return random
 
 
 # ----- ROOMS ----- #
@@ -296,7 +289,7 @@ def drab_town():
             sleep(sec)
         else:
             print(f"After the sun rises over the horizon, you awaken, pack up your little camp on the outskirts of town, and begin your quest!")
-        wood_woods_day()
+        wood_woods_day_choice()
     
     # EMBARK
     elif sleep_or_embark == "2":
@@ -310,11 +303,205 @@ def drab_town():
         wood_woods_night()
     os.system('cls')
     return Rogue or Chef or sword or map or rations or Ally
-    
 
-def wood_woods_day():
+
+def wood_woods_day_choice():
+    # Title
     print(utils.UnderLN("Wood Woods"))
-    print("\nCOMING SOON!")
+    # If you have map, this gets run.
+    if map == 1:
+        choice = input("Use map or follow trail?: [1=map / 2=Off Trail]: ")
+        if choice == 1:
+            print("You have a map and you decide to follow it's directions.")
+            wood_woods_day_map()
+            return
+        elif choice == 2:
+            print("You decide to see where the off-roads take you.")
+            wood_woods_day_trail()
+            return
+    # This runs if you don't have map.
+    print("Since there was no obvious path and you have no map, you decided to just keep moving into the forest blindly...")
+    wood_woods_day_trail()
+
+def wood_woods_day_map():
+    print("Because of your wise purchase of a map, you're able to know where the bad areas of the forest are and the direct path to the"
+          " cave is. Just as things seem to go well, a tall knight in a black surcoat stands on a bridge, staring off into the distance.")
+    print("At his feet lies those who apparently fell before him. You wonder how he did such a thing, as this knight is missing an arm"
+          " and a leg...")
+    print("You attempt to pass him, but he hops in your way with his one leg.")
+    print("\n???: NONE SHALL PASS...")
+    print("\nYou stare at the man confuzzled. Who is he to tell you what to do with only two limbs?")
+    # This choice is intentional!
+    choice1 = input("What do you do? [1=Push him over / 2=Push him over]: ")
+    print("This man is clearly not gonna move. You point out a bird in the sky and he turns around.")
+    print("\n???: Where!?")
+    print("\nYou walk up to him and simply topple him over. He cannot pick himself up.")
+    print("\n???: Ah, DANG IT! I'm invincible I'll have you know! We'll meet again!")
+    print("\nYou walk off feeling a little guilty about what you've done, but your quest waits for no one!")
+    print("\nYou make it to the mouth of the cave. With all the strangeness of the forest you've been told of, you feel"
+          " like you got through this very well. The map follows into the mouth of the cave, so you summon your courage and disappear"
+          " into the darkness of the path ahead...")
+    cave()
+
+def wood_woods_day_trail():
+    print("As you walk amongst the forest aimlessly, you find a nice looking stick and think about"
+          " how you may need a torch if it gets dark out. You found some space for it in your pack and"
+          " kept on your merry way.")
+    # You got a stick!
+    Stick = 1
+
+    print("\nHours have passed, none you have kept track of, but suddenly, stifling the peace is a growl"
+          " of a large creature...")
+    wood_woods_lumberjack(lives)
+    
+# Initiate the lumberjack
+def wood_woods_lumberjack(lives):
+    # If you have the rogue:
+    if Rogue == 1:
+        print(f"\n{Ally}: Hey, {Player_Name}, that isn't a monster behind those shrubs... It's a man. I'll let you decide how we play this out.")
+    
+    choice = int(input("\nWhatever it is, it hasn't noticed you... How should you proceed? [1. Investigate / 2. Sneak away / 3. Throw your stick at it]: "))
+    # Investigate the noise.
+    if choice == 1:
+        print("\nYou decide that you need to see what this is. Your armor should hold you up fine if it comes down to a fight.")
+        print("You breathe in... and then out, and swipe the brush away, and...")
+        print("\nCRASH!")
+        print("\nThe tree ahead hammers the earth right in front of you. The grunting is from no beast, but rather a hulking man in plaid;"
+              " A lumber jack!")
+        
+        print("\nLUMBERJACK: Stubborn pine! took ye long enough to come down!")
+        print("\nHe turns around to fell the next pine and sees your small frame, fixated on the fallen tree.")
+        wood_woods_lumberjack_intro()
+        
+    # Sneak by the creature.
+    if choice == 2:
+        if Rogue == 1:
+            print("You decide not to draw attention to yourself. Who knows if this guy is truly trustworthy. Let's just not bother...")
+        else:
+            print("You decide it's best not to play with fire. No need to make any silly decisions when your full focus should be to your quest.")
+    
+    # Throw your stick at the sound!
+    if choice == 3:
+        print("\nYour intrusive thoughts get the better of you. You take out the stick from your pack and stare at it for a moment.")
+        print("You throw it straight past the bush and you here a momentarily satisfying thunk.")
+        print("\n???: OW! the hell!?")
+        print("\nA huge, plaid, burly man jumps out of the bush on all-fours. He looks very irritated.")
+        print("\nYou begin to panick. In the breif moment of thought that you have, you...\n")
+        
+        if sword == 1:
+            choice4 = int(input("[1. or 2. Don't Fight / 3. Fight]: "))
+            if choice4 == 3:
+                # Draw your sword
+                print("\nYou reach for your blade in a hurry and try to find a stance to fight.")
+                print("Without a chance to think, he swings his axe sideways!")
+                chance = chance_50()
+                if chance == 1:
+                    print("\nYou manage to duck quickly and strike the hulking man in the temple with the pommel of your sword.")
+                    print("He slides against the forest floor five feet behind you, out cold. You breathe a sigh of relief.")
+                else:
+                    print("\nWHACK!")
+                    lives -= 1
+                    print(f"\nHe struck you in the side for a chunk of your life!")
+                    print(f"HEALTH REMAINING: {lives}/3")
+                    print("\nYou pick yourself back up and swing wildly in the guy's direction and nick him once. He reels back!")
+                    print("He turns completely and runs away from you, shouting swears as he disappears behind the tree filled hills.")
+                    
+                # if Chef is in your party
+                try:
+                    if Chef == 1:
+                        print(f"\n{Ally}: I hate to say this so early, my man {Player_Name}, but I want no part of this if I'm going to be" 
+                                " in that kind of danger...")
+                        print(f"{Ally}: Just take this and I'll be on my way, good luck, guy!")
+                        Chef = 0
+                        Ally = "No one!"
+                        lives += 1
+                        print("\nIt's a hastily put together first-aid kit. It's convenient but we've already lost our ally... Dang it...")
+                        print(f"HEALTH REMAINING: {lives}/3")
+                        return lives
+                except:
+                    pass
+                # if Rogue is in your party
+                try:
+                    if Rogue == 1:
+                        print(f"\n{Ally}: Good fighting, {Player_Name}. As well as you did, I think this could have gone better...")
+                        print(f"{Ally}: As much as I loathe talking or trusting people, even I would try talking your way out sometimes.")
+                        print("You feel silly, but at least you've got something of a friend to give suggestions to.")
+                except:
+                    pass
+                
+                choice5 = int(input("\nAfter your adrenaline finally settles, you see that he dropped his axe... Take it? [1. Yes / 2. No]: "))
+                if choice5 == 1:
+                    print("\nIt looks quite strong... Given your quest, you're sure something out there will forgive you for taking it.")
+                    Scary_axe = 1
+                    print("\nYou got the SCARY AXE!")
+                    
+                else:
+                    print("\nYou don't take what you don't absolutely need. You don't need this axe, he does.")
+                    print("Maybe you can make ammends after this is all over.")
+                
+                print("\nYou brush yourself off, stretch, and keep moving forward despite the ever approaching night.")
+                wood_woods_night()
+                return Scary_axe, lives
+            
+        choice4 = int(input("[1. Run / 2. Beg for mercy]: "))
+        # Run away
+        if choice4 == 1:
+            print("\nFear seizes your heart and without a thought, you run in any direction that is away from the monster man.")
+            print("\nAfter running for until you couldn't hear his swearing anymore, you finally stop to breathe and recover from that sprint.")
+            print("\nYou then turn your head up and see that the cave is right before your eyes. You've heard that, although perilous, this"
+                  " is one of the better ways to get to the ruins. Why waste this opportunity perfectly placed in front of you?")
+            cave()
+
+        # Beg for mercy
+        elif choice4 == 2:
+            
+            print("\nYou fall to the floor and curl up into a ball. You cry out to the man not to hurt you!")
+            print("\nLUMBERJACK: Oh geez, sorry about that! Ahem-")
+            wood_woods_lumberjack_intro()
+        
+    return lives
+
+# Meet the lumberjack
+def wood_woods_lumberjack_intro():
+    print("\nLUMBERJACK: Hey little guy! What are you doing out here? Nobody comes through here for a frolick besids the foolish!")
+    choice2 = int(input("\nHow do you answer? [1. I'm out to save the blacksmith's daughter! / 2. None of your business!]: "))
+    # I'm saving Ivar's Daughter!
+    if choice2 == 1:
+        print("\nLUMBERJACK: You mean old man Ivar? You could have used his name! He and I go way back. He used to bug me all the"
+                " time about lumber and charcoal for his forge!")
+        print("\nLUMBERJACK: Besides that, his daughter isn't safe? I find that hard to believe... She's a fighter with a good noggin"
+                " on her shoulders, she wouldn't just be kidnapped, there's gotta be something more to this.")
+        print("\nLUMBERJACK: My best tip for you, lad is to also think rationally. You may not have to resort to fighting with good chattin'"
+                " skills.")
+    # I'm keeping my secrets!
+    else:
+        print("\nLUMBERJACK: All good buddy! When it's just you and man-eating creatures out here, a good word from a stranger is"
+                " entertaining!")
+    if map == 1:
+        print("Say little man, you need any pointers for these parts? I do live here.")
+        choice3 = int(input("\n[1. Yeah, can you read my map? / 2. I'm ok, thanks!]"))
+        if choice3 == 1:
+            print("\nLUMBERJACK: Yeah, give it here!")
+            print("\nHe takes the map from you and squats down so you can see where he is pointing to. It's all making sense now!")
+            print("\nLUMBERJACK: Thanks for giving ol' redbeard a chance to help! Hope we meet again some other day, if nothing bad happens!")
+            print("\nYou leave with a clear image in your head of the path you must take! No take the wrong turns for this guy!")
+            # You travel to the ruins this way, skipping the cave!
+            ruins()
+        if choice3 == 2:
+            print("\nLUMBERJACK: I like your confidence, metal man! A good spirit will take you far!")
+            print("\nLUMBERJACK: Take care, don't get yourself hurt!")
+            print("\nYou are not sure how you feel about being so protective of your quest, but you can rest well knowing you will not"
+                    " likely not be followed.")
+            print("\nAs night begins to fall, you approach the foot of a cave. Supposedly, this cave is the best way to the ruins and you have"
+                " no better choice than to trust this.")
+            # Enter the cave
+            cave()
+    print("\nLUMBERJACK: It's good to meet friendly faces once in a while, you take care little guy!")
+    print("\nYou wave back at him and keep following the path, knowing you made a good friend today.")
+    print("\nYou approach the cave after a nice walk through the woods and meet the ominous mouth of the cave. It seems to be the only way to"
+          " the ruins, so without wasting any more time, you summon your courage and disappear into the darkness forward.")
+    cave()
+
 
 def wood_woods_night():
     print(utils.UnderLN("Wood Woods"))
@@ -322,9 +509,12 @@ def wood_woods_night():
 
 def cave():
     print(utils.UnderLN("The Cave"))
+    print("\nCOMING SOON!")
 
 def ruins():
     print(utils.UnderLN("Ruins of Peculiarly Good Smells"))
+    print("\nCOMING SOON!")
 
 def sanctum():
     print(utils.UnderLN("Sanctum"))
+    print("\nCOMING SOON!")
