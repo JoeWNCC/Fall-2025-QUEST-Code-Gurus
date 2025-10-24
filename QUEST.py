@@ -485,6 +485,7 @@ def wood_woods_lumberjack_intro():
             print("\nHe takes the map from you and squats down so you can see where he is pointing to. It's all making sense now!")
             print("\nLUMBERJACK: Thanks for giving ol' redbeard a chance to help! Hope we meet again some other day, if nothing bad happens!")
             print("\nYou leave with a clear image in your head of the path you must take! No take the wrong turns for this guy!")
+            input("Enter any button to continue: ")
             # You travel to the ruins this way, skipping the cave!
             ruins()
         if choice3 == 2:
@@ -494,12 +495,15 @@ def wood_woods_lumberjack_intro():
                     " likely not be followed.")
             print("\nAs night begins to fall, you approach the foot of a cave. Supposedly, this cave is the best way to the ruins and you have"
                 " no better choice than to trust this.")
+            input("Enter any button to continue: ")
             # Enter the cave
             cave()
+
     print("\nLUMBERJACK: It's good to meet friendly faces once in a while, you take care little guy!")
     print("\nYou wave back at him and keep following the path, knowing you made a good friend today.")
     print("\nYou approach the cave after a nice walk through the woods and meet the ominous mouth of the cave. It seems to be the only way to"
           " the ruins, so without wasting any more time, you summon your courage and disappear into the darkness forward.")
+    input("Press any button to continue: ")
     cave()
 
 
