@@ -22,10 +22,10 @@ Scary_axe = 0
 
 # Trinkets/Items
 map = 0
-Magic_Meal = False
-Stick = False
-Torch = False
-Neck_Cloth = True # Spend it to make a torch when you have a stick
+Magic_Meal = 0
+Stick = 0
+Torch = 0
+Neck_Cloth = 1 # Spend it to make a torch when you have a stick
 rations = 0
 
 # Allies/Hires
@@ -113,13 +113,13 @@ def drab_town():
     print("\nBesides the armory, you see a cartography shop, (Maps) a butchers stand, and a nearby pub that\n"
           "other adventurers flood to. You check your pockets... You got enough coin to visit two of\n"
           "these places.")
-    sleep(3)
+    sleep(sec)
     
     shop_stops = 2
     while shop_stops != 0:
         print(f"\nYou have {shop_stops} shop stops left.")
 
-        choice1 = input("\nSo where to? [1. Armory,  2. Cartographer,  3. Butcher,  4. Pub]:")
+        choice1 = input("\nSo where to? [1. Armory,  2. Cartographer,  3. Butcher,  4. Pub]: ")
         os.system('cls')
         # Armory
         if choice1 == "1":
@@ -128,7 +128,7 @@ def drab_town():
             sleep(sec)
             print("The smith guy sees you staring at it with childlike wonder and comes up to\n"
                   "you.")
-            armory = input("\nARMORY CLERK: Didja want it, son? [y/any key] [WILL EXHAUST A SHOP STOP]: ")
+            armory = input("\nARMORY CLERK: Didja want it, son? [y/any key] [WILL EXHAUST A SHOP STOP]: ").lower()
             if armory == "y":
                 print("\nARMORY CLERK: Tis yours now! Thank ye for the gold!")
                 sleep(sec)
@@ -137,7 +137,6 @@ def drab_town():
                 proceed = input("Press anything to proceed: ")
                 sword = 1
                 shop_stops -= 1
-                
             else:
                 print("\nARMORY CLERK: All good, son! Does plenty good lookin pretty for me business!")
                 sleep(sec)
@@ -284,12 +283,13 @@ def drab_town():
     if sleep_or_embark == "1":
         print("\nYou decide that it's probably best to tackle the forest in the daylight. Who knows what's out in the dark of night. You stay in the nearby inn.")
         sleep(sec)
-        if Rogue or Chef == 1:
-            print(f"\nAfter the sun rises over the horizon, you wake up {Ally} and pack up your little camp on the outskirts of town. Your adventure truly begins!")
-            sleep(sec)
-        else:
+        try: 
+            if Rogue or Chef == 1:
+                print(f"\nAfter the sun rises over the horizon, you wake up {Ally} and pack up your little camp on the outskirts of town. Your adventure truly begins!")
+                sleep(sec)
+        except:
             print(f"After the sun rises over the horizon, you awaken, pack up your little camp on the outskirts of town, and begin your quest!")
-        wood_woods_day_choice()
+        wood_woods_day_choice(map)
     
     # EMBARK
     elif sleep_or_embark == "2":
@@ -302,47 +302,97 @@ def drab_town():
             print("\nYou summon up your courage and press on into the dark of the woods. Who knows what you'll see and what will happen...")
         wood_woods_night()
     os.system('cls')
-    return Rogue or Chef or sword or map or rations or Ally
+    # Return necessary variables
+    try:
+        if Ally != "To be decided":
+            if Rogue == 1:
+                return Rogue
+            elif Chef == 1:
+                return Chef
+            return Ally
+    except:
+        pass
+    try:
+        if sword == 1:
+            return sword
+    except:
+        pass
+    try:
+        if map == 1:
+            return map
+    except:
+        pass
+    try:
+        if rations > 0:
+            return rations
+    except:
+        pass
 
 
-def wood_woods_day_choice():
+# Make choice Map/Trail
+def wood_woods_day_choice(map):
     # Title
-    print(utils.UnderLN("Wood Woods"))
+    os.system('cls')
+    print(utils.UnderLN("\nWood Woods"))
+    sleep(sec)
     # If you have map, this gets run.
-    if map == 1:
-        choice = input("Use map or follow trail?: [1=map / 2=Off Trail]: ")
-        if choice == 1:
-            print("You have a map and you decide to follow it's directions.")
-            wood_woods_day_map()
-            return
-        elif choice == 2:
-            print("You decide to see where the off-roads take you.")
-            wood_woods_day_trail()
-            return
-    # This runs if you don't have map.
-    print("Since there was no obvious path and you have no map, you decided to just keep moving into the forest blindly...")
-    wood_woods_day_trail()
+    try:
+        if map == 1:
+            print("\nYou pull out the map that you got from the cartographer and think to yourself...")
+            choice = int(input("Use map or follow trail?: [1: Map / 2: Off Trail]: "))
+            if choice == 1:
+                print("\nYou decide that it would be foolish to even consider going outside the map's directions and follow it's directions.")
+                sleep(sec)
+                proceed = input("\nPress anything to proceed: ")
+                wood_woods_day_map()
+            elif choice == 2:
+                print("You decide to see where the off-roads take you.")
+                sleep(sec)
+                proceed = input("\nPress anything to proceed: ")
+                wood_woods_day_trail()
+            return map
+    except:
+        # This runs if you don't have map.
+        print("\nSince there was no obvious path and you have no map, you decided to just keep moving into the forest blindly...")
+        sleep(sec)
+        proceed = ("\nPress anything to proceed: ")
+        wood_woods_day_trail()
+        
 
+# Starting Wood Woods with a map
 def wood_woods_day_map():
-    print("Because of your wise purchase of a map, you're able to know where the bad areas of the forest are and the direct path to the"
+    print("\nBecause of your wise purchase of a map, you're able to know where the bad areas of the forest are and the direct path to the"
           " cave is. Just as things seem to go well, a tall knight in a black surcoat stands on a bridge, staring off into the distance.")
+    sleep(sec)
     print("At his feet lies those who apparently fell before him. You wonder how he did such a thing, as this knight is missing an arm"
           " and a leg...")
+    sleep(sec)
     print("You attempt to pass him, but he hops in your way with his one leg.")
+    sleep(sec)
     print("\n???: NONE SHALL PASS...")
+    sleep(sec)
     print("\nYou stare at the man confuzzled. Who is he to tell you what to do with only two limbs?")
+    sleep(sec)
     # This choice is intentional!
-    choice1 = input("What do you do? [1=Push him over / 2=Push him over]: ")
+    choice1 = int(input("What do you do? [1=Push him over / 2=Push him over]: "))
     print("This man is clearly not gonna move. You point out a bird in the sky and he turns around.")
+    sleep(sec)
     print("\n???: Where!?")
+    sleep(sec)
     print("\nYou walk up to him and simply topple him over. He cannot pick himself up.")
+    sleep(sec)
     print("\n???: Ah, DANG IT! I'm invincible I'll have you know! We'll meet again!")
+    sleep(sec)
     print("\nYou walk off feeling a little guilty about what you've done, but your quest waits for no one!")
+    sleep(sec)
     print("\nYou make it to the mouth of the cave. With all the strangeness of the forest you've been told of, you feel"
           " like you got through this very well. The map follows into the mouth of the cave, so you summon your courage and disappear"
           " into the darkness of the path ahead...")
+    sleep(sec)
+    proceed = input("Press anything to proceed: ")
     cave()
 
+# Start of Wood Woods
 def wood_woods_day_trail():
     print("As you walk amongst the forest aimlessly, you find a nice looking stick and think about"
           " how you may need a torch if it gets dark out. You found some space for it in your pack and"
@@ -352,8 +402,8 @@ def wood_woods_day_trail():
 
     print("\nHours have passed, none you have kept track of, but suddenly, stifling the peace is a growl"
           " of a large creature...")
-    wood_woods_lumberjack(lives)
-    
+    wood_woods_lumberjack(lives) 
+
 # Initiate the lumberjack
 def wood_woods_lumberjack(lives):
     # If you have the rogue:
@@ -506,19 +556,27 @@ def wood_woods_lumberjack_intro():
     input("Press any button to continue: ")
     cave()
 
-
+# Start Wood Woods at Night
 def wood_woods_night():
     print(utils.UnderLN("Wood Woods"))
-    print("\nCOMING SOON!")
+    sleep(sec)
+    print("It's dark out. Very dark out, but nonetheless your spirits remain high. As far as you can see, it's just tall trees\n"
+          "and ever-spanning hills. One of these directions leads to the cave you heard about. Supposedly, through the cave is the\n"
+          "way to the ruins. You've got no choice but to follow that tip for right now, since anything could happen to Ivar's daughter.\n")
+    sleep(sec)
+    print("\nEven if you had a map, it's too dark to see it.")
 
+# Cave
 def cave():
     print(utils.UnderLN("The Cave"))
     print("\nCOMING SOON!")
 
+# Ruins
 def ruins():
     print(utils.UnderLN("Ruins of Peculiarly Good Smells"))
     print("\nCOMING SOON!")
 
+# Sanctum
 def sanctum():
     print(utils.UnderLN("Sanctum"))
     print("\nCOMING SOON!")
