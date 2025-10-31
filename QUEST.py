@@ -17,11 +17,11 @@ sleep(3)
 
 # ----- VARIABLES ----- #
 # Weapons
-sword = 1
+sword = 0
 Scary_axe = 0
 
 # Trinkets/Items
-map = 0
+has_map = 0
 Magic_Meal = 0
 Stick = 0
 Torch = 0
@@ -42,12 +42,13 @@ lives = 3
 
 Player_Name = "Knight Guy"
 
-# SKIP FUNCTION
-DEBUG = False
+# ---------------- DEBUGGING ---------------- #
+DEBUG = True
 if DEBUG == True:
     sec = 0
 else:
     sec = 3
+# ---------------- DEBUGGING ---------------- #
 
 
 # ----- CHANCE FUNCTIONS ----- #
@@ -61,10 +62,19 @@ def chance_75():
     random = randint(1, 4)
     return random
 
-
 # ----- ROOMS ----- #
 def drab_town():
-    
+    global sword, has_map, rations, Rogue, Chef, Ally, Player_Name, sec
+
+    # Debug Info
+    if DEBUG == True:
+        print("\n================= DEBUGGING =================\n")
+        print(f"DEBUG: sword={sword}, has_map={has_map}, rations={rations}, Rogue={Rogue}, Chef={Chef}, Lives={lives}")
+        print("\n================= DEBUGGING =================\n")
+
+    # Cross-platform clear screen (Thanks ChatGPT!)
+    os.system('cls' if os.name == 'nt' else 'clear')
+
     print(utils.UnderLN("Drab Town"))
     sleep(sec)
     print("You wander your way into a quaint little town after taking on a quest\n"
@@ -76,7 +86,7 @@ def drab_town():
     sleep(sec)
     print("\nYou can see him drowning away his sorrows at his workbench with fine mead.\n"
           "A bit much, actually. He notices his new visitor, you, gawking and straightens\n"
-          "up swiftly")
+          "up swiftly.")
     sleep(sec)
     print("\nIVAR: Oh, erm, the mercenary! Pay me no mind, you likely know how a fath'r is\n"
           "without 'is good ol daughter.")
@@ -92,8 +102,7 @@ def drab_town():
     print("\nIVAR: Me daught'r has been taken! Flown off with an evil figure I couldn't get a good look at, "
           "dare I say beast!\n"
           "I can tell ye that the jerk flew off towards those strange ruins, in case ye need directions.\n"
-          "I'd go chasin' after 'er but years of poundin' metal are rough on a body..."
-          )
+          "I'd go chasin' after 'er but years of poundin' metal are rough on a body...")
     sleep(sec)
     print("\nIVAR: You strange-folk and young'uns are after the thrill o' life anyway, so better give\n"
           "the next generation a fightin' chance!")
@@ -102,28 +111,33 @@ def drab_town():
     sleep(sec)
     print("\nYou jump out of your seat eagerly and clank your way out of the door. Time for adventure!\n")
     sleep(sec)
-    
+
     input("Press any key to proceed: ")
-    
-    os.system('cls')
+
+    os.system('cls' if os.name == 'nt' else 'clear')
     sleep(sec)
     print("You make it to the town square and look around. There are shops all around you filled with\n"
-          "different odds and ends, and some places that peak your interest; The armory.")
+          "different odds and ends, and some places that pique your interest; The armory.")
     sleep(sec)
-    print("\nBesides the armory, you see a cartography shop, (Maps) a butchers stand, and a nearby pub that\n"
+    print("\nBesides the armory, you see a cartography shop (maps), a butcher’s stand, and a nearby pub that\n"
           "other adventurers flood to. You check your pockets... You got enough coin to visit two of\n"
           "these places.")
     sleep(sec)
-    
+
     shop_stops = 2
     while shop_stops != 0:
         print(f"\nYou have {shop_stops} shop stops left.")
-
         choice1 = input("\nSo where to? [1. Armory,  2. Cartographer,  3. Butcher,  4. Pub]: ")
-        os.system('cls')
-        # Armory
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+        # ---------- ARMORY ---------- #
         if choice1 == "1":
-            print("\nYou jog over to the armory and stare at the one humongous blade displayed neatly over\n"
+            if sword == 1:
+                print("\nARMORY CLERK: Little one, even if I did have an extra sword, you would not be able to carry it reasonably... Check out the other places lad!")
+                sleep(sec)
+                continue
+
+            print("\nYou jog over to the armory and stare at the humongous blade displayed neatly over\n"
                   "the fireplace. You think you might need that sword...")
             sleep(sec)
             print("The smith guy sees you staring at it with childlike wonder and comes up to\n"
@@ -133,234 +147,186 @@ def drab_town():
                 print("\nARMORY CLERK: Tis yours now! Thank ye for the gold!")
                 sleep(sec)
                 print("\nYou got the BIG SWORD!")
-                sleep(sec)
-                proceed = input("Press anything to proceed: ")
                 sword = 1
                 shop_stops -= 1
             else:
-                print("\nARMORY CLERK: All good, son! Does plenty good lookin pretty for me business!")
-                sleep(sec)
-                print("You walk back to town square.")
+                print("\nARMORY CLERK: All good, son! Does plenty good lookin’ pretty for me business!")
+            sleep(sec)
 
-        # Cartographer
+        # ---------- CARTOGRAPHER ---------- #
         elif choice1 == "2":
-            print("\nYou make your way over to the super fancy place of scrolls and maps and walk through\n"
-                  "the fancy door.")
+            if has_map == 1:
+                print("\nCARTOGRAPHER: I already gave you my best map! What more do you want?")
+                sleep(sec)
+                continue
+
+            print("\nYou make your way over to the fancy place of scrolls and maps and walk through\n"
+                  "the ornate door.")
             sleep(sec)
             print("\nYou go to the counter and ring the little service bell. A skinny bearded man shuffles\n"
                   "towards you.")
             sleep(sec)
             print("\nCARTOGRAPHER: Uh, oh! Hey little guy! What'cha lookin' for?")
             sleep(sec)
-            Cartography = input("\nDo you want the ruins map? [y/any key] [WILL EXHAUST A SHOP STOP]: ")
-            
+            Cartography = input("\nDo you want the ruins map? [y/any key] [WILL EXHAUST A SHOP STOP]: ").lower()
             if Cartography == "y":
-                print("\nCARTOGRAPHER: Ah, yes! A great map, but our real question is why would you go to the ruins?")
+                print("\nCARTOGRAPHER: Ah, yes! A great map, but why would you go to the ruins?")
                 sleep(sec)
-                print("\nCARTOGRAPHER: -uh, pay that question no mind! I think I know what you're doing! Here is this\n"
-                      "map for you! I wish you the best luck!")
-                sleep(sec)
-                print("\nYou got the MAP!\n")
-                map = 1
-                sleep(sec)
-                print("You leave the store with a little sense of security knowing you should know the\n"
-                      "way to go!")
-                sleep(1)
-                proceed = input("Press anything to proceed: ")
+                print("\nCARTOGRAPHER: —uh, pay that question no mind! Here is the map, and I wish you the best of luck!")
+                has_map = 1
                 shop_stops -= 1
-
+                print("\nYou got the MAP!\n")
             else:
-                print("\nCARTOGRAPHER: You sure? You think you can find the way just fine? Well, alright little man! Cya later!..\n"
-                      "Hopefully!")
-                sleep(sec)
-                print("\nYou headed back to town square.")
+                print("\nCARTOGRAPHER: You sure? You think you can find the way just fine? Well, alright little man! Cya later!")
+            sleep(sec)
 
-        
-        # Butcher
+        # ---------- BUTCHER ---------- #
         elif choice1 == "3":
-            print("\nYou wander over to the butcher shop, alured by the wonderful scent of cured ham. A gruff man\n"
+            if rations > 0:
+                print("\nYou already have enough rations for your trip.")
+                sleep(sec)
+                continue
+
+            print("\nYou wander over to the butcher shop, lured by the scent of cured ham. A gruff man\n"
                   "slaves away at his stand, focused as ever on perfecting his slices.")
             sleep(sec)
             print("\nBUTCHER GUY: Yo, small metal man, lookin' for quality cuts for the journey? No one gets far\n"
-                  "without a right and proper meal!")
+                  "without a proper meal!")
             sleep(sec)
-            Butcher = input("\nDo you want rations? [y/any key] [WILL EXHAUST A SHOP STOP]: ")
-            if Butcher == "y":
+            butcher = input("\nDo you want rations? [y/any key] [WILL EXHAUST A SHOP STOP]: ").lower()
+            if butcher == "y":
                 print("\nBUTCHER GUY: Wise choice, mate! No starving out there, little man!")
-                sleep(sec)
-                print("\nYou got the RATIONS! [You have three uses of this]")
                 rations = 3
-                sleep(sec)
-                print("You leave the stand knowing you'll have energy and pump out there.")
-                sleep(1)
-                proceed = input("Press anything to proceed: ")
                 shop_stops -= 1
+                print("\nYou got the RATIONS! [Three uses]")
             else:
                 print("\nBUTCHER GUY: If you plan to hunt with your current weapons, I wish you luck!")
-                sleep(sec)
-                print("You head down to town square.")
-        # Pub
+            sleep(sec)
+
+        # ---------- PUB ---------- #
         elif choice1 == "4":
+            if Rogue == 1 or Chef == 1:
+                print(f"\n{Ally}: Seriously? I think I'm enough, don't go back in there...")
+                sleep(sec)
+                continue
+
             print("\nYou end up getting stuck in the crowd of the pub. After you find some space, two individuals pique\n"
                   "your interest.")
             sleep(sec)
-            print("\nYou can see a hooded figure, probably a rogue, leaning against the far wall. They doesn't seem to be\n"
-                  "actively searching for people to hire them... Perhaps they're shy?")
+            print("\nYou can see a hooded figure (a rogue) leaning against the far wall, and a short, noisy chef trying\n"
+                  "to convince a group to hire him.")
             sleep(sec)
-            print("\nAnd the hardly hidden chef guy trying to convince a group to hire him. He's making a lot of noise and\n"
-                  "seems to only be scaring adventurers away...")
+
+            hire = input("\nWho do you wanna talk to? [1. Chef,  2. Rogue,  3. Leave]: ")
+
+            # Chef path
+            if hire == "1":
+                cook = input("\nTake him into your party? [y/any key] [WILL EXHAUST A SHOP STOP]: ").lower()
+                if cook == "y":
+                    Chef = 1
+                    Ally = "Tonio"
+                    print(f"\nYou hired {Ally} the Chef!")
+                    shop_stops -= 1
+                else:
+                    print("\nCHEF: Good grief! I gotta change my approach!")
+                sleep(sec)
+
+            # Rogue path
+            elif hire == "2":
+                rogue = input("\nGive the rogue a chance? [y/any key] [WILL EXHAUST A SHOP STOP]: ").lower()
+                if rogue == "y":
+                    Rogue = 1
+                    Ally = "Kanra"
+                    print(f"\nYou hired {Ally} the Rogue!")
+                    shop_stops -= 1
+                else:
+                    print("\nROGUE: ...You seem to trust yourself, or maybe you lack trust in me. Shouldn’t be surprised...")
+                sleep(sec)
+            else:
+                print("\nYou changed your mind. The crowd here is kind of strange.")
+                sleep(sec)
+
+        else:
+            print("\nThat’s not a valid choice.")
             sleep(sec)
-            
-            #if rations == 3:
-                #print("\nYou did buy rations... Who knows what he could do with them.")
-                #sleep(2)
-            
 
-            hiring = 0
-            while hiring == 0:
-                hire = input("\nWho do you wanna talk to? [1. Chef,  2. Rogue,  3. Leave]: ")
-
-                # CHEF
-                if hire == "1":
-                    print("\nYou shout as loud as you can under your helmet and get the short cook's attention!")
-                    sleep(sec)
-                    print("\nCOOK: Ah, mama maria! Could you be the one who takes me in? No one else seems to hear me! Please, sir knight!")
-                    sleep(sec)
-                    cook = input("\nTake him into your party? [y/any key] [WILL EXHAUST A SHOP STOP]: ")
-                    if cook == "y":
-                        print(f"\nCHEF: YES! YIPPIE! You won't regret this! I am chef Tonio, but just call me Tony. And you are?.. {Player_Name}?\n"
-                              "A yes, a fine name! Pleasure to meet you!")
-                        Ally = "Tonio"
-                        sleep(sec)
-                        print(f"\nYou hired {Ally} the chef!")
-                        Chef = 1
-                        sleep(sec)
-                        print(f"\nYou both find your way out of the bar, {Ally} skipping jovially behind!")
-                        sleep(1)
-                        proceed = input("Press anything to proceed: ")
-                        hiring = 1
-                        shop_stops -= 1
-                    else:
-                        print("CHEF: Good greif! I gotta change my approach!")
-                        sleep(sec)
-            
-
-                # ROGUE
-                elif hire == "2":
-                    print("\nYou swim through the sea of people to the hooded figure. they glance over at you for but a second, but you can see\n"
-                          "from that glance that they have been waiting for somebody to approach for who knows how long.")
-                    sleep(sec)
-                    print("\nA young womans voice speaks;")
-                    sleep(sec)
-                    print("\nROGUE: ... Did you, uh... Wanna hire me?.. You could use someone with strong senses in your team... considering your...\n"
-                          "helmet.")
-                    rogue = input("\nGive the rogue a chance? [y/any key] [WILL EXHAUST A SHOP STOP]: ")
-                    if rogue == "y":
-                        print(f"\nROGUE: ... Thanks... I mean it. The names Kanra. Somebody told me your name is {Player_Name}. Suits you.")
-                        Ally = "Kanra"
-                        sleep(sec)
-                        print(f"\nYou hired {Ally} the Rogue!")
-                        sleep(1)
-                        input("Press anything to proceed: ")
-                        Rogue = 1
-                        hiring = 1
-                        shop_stops -= 1
-                    else:
-                        print("ROGUE: ... You seem to trust yourself, or maybe you lack trust in me... Shouldn't be surprised...")
-                        sleep(sec)
-
-                elif hire == "3":
-                    print("You changed your mind. The crowd here is kind of strange.")
-                    sleep(sec)
-                    hiring = 1
-
+    # ---------- POST-SHOP DECISION ---------- #
+    os.system('cls' if os.name == 'nt' else 'clear')
     print("\n---\nAfter getting what you would call the necessities, you notice the sun begins to sink below the horizon. Since you see that the road\n"
           "ahead leads to Wood Woods, You think to yourself...\n")
-    sleep(5)
+    sleep(sec)
     sleep_or_embark = input("Should I embark or rest until morning? [1. REST,  2. EMBARK]: ")
-    
-    # REST
-    if sleep_or_embark == "1":
-        print("\nYou decide that it's probably best to tackle the forest in the daylight. Who knows what's out in the dark of night. You stay in the nearby inn.")
-        sleep(sec)
-        try: 
-            if Rogue or Chef == 1:
-                print(f"\nAfter the sun rises over the horizon, you wake up {Ally} and pack up your little camp on the outskirts of town. Your adventure truly begins!")
-                sleep(sec)
-        except:
-            print(f"After the sun rises over the horizon, you awaken, pack up your little camp on the outskirts of town, and begin your quest!")
-        wood_woods_day_choice(map)
-    
-    # EMBARK
-    elif sleep_or_embark == "2":
-        print("\nThe blacksmith's princess cannot wait! We must make haste! This darkness is nothing!")
-        sleep(sec)
-        if Rogue or Chef == 1:
-            print(f"\nYou and {Ally} make your way into the forest. Your silhouettes slowly sink into the darkness."
-                  "\nWho knows what you'll run into at this hour...")
-        else:
-            print("\nYou summon up your courage and press on into the dark of the woods. Who knows what you'll see and what will happen...")
-        wood_woods_night()
-    os.system('cls')
-    # Return necessary variables
-    try:
-        if Ally != "To be decided":
-            if Rogue == 1:
-                return Rogue
-            elif Chef == 1:
-                return Chef
-            return Ally
-    except:
-        pass
-    try:
-        if sword == 1:
-            return sword
-    except:
-        pass
-    try:
-        if map == 1:
-            return map
-    except:
-        pass
-    try:
-        if rations > 0:
-            return rations
-    except:
-        pass
 
+    if sleep_or_embark == "1":
+        print("\nYou decide that it's probably best to tackle the forest in the daylight. You stay in the nearby inn.")
+        if Ally != "To be decided":
+            print(f"\nAfter the sun rises, you wake up {Ally} and pack up your little camp on the outskirts of town. Your adventure truly begins!")
+        else:
+            print(f"\nAfter the sun rises over the horizon, you awaken, pack up, and begin your quest!")
+        input("Press any key to proceed: ")
+        os.system('cls' if os.name == 'nt' else 'clear')
+        wood_woods_day_choice()
+    else:
+        print("\nThe blacksmith's princess cannot wait! We must make haste! This darkness is nothing!")
+        if Rogue == 1 or Chef == 1:
+            print(f"\nYou and {Ally} make your way into the forest. Your silhouettes slowly sink into the darkness...")
+        else:
+            print("\nYou summon your courage and press on into the dark of the woods alone.")
+        input("Press any key to proceed: ")
+        wood_woods_night()
+    
+    # Return necessary variables (May be redundant now)
+    if Ally != "To be decided":
+        if Rogue == 1:
+            return Rogue, sword, has_map, rations
+        elif Chef == 1:
+            return Chef, sword, has_map, rations
+    else:
+        return sword, has_map, rations
 
 # Make choice Map/Trail
-def wood_woods_day_choice(map):
+def wood_woods_day_choice():
+    # Debug Info
+    if DEBUG == True:
+        print("\n================= DEBUGGING =================\n")
+        print(f"DEBUG: sword={sword}, has_map={has_map}, rations={rations}, Rogue={Rogue}, Chef={Chef}, Lives={lives}")
+        print("\n================= DEBUGGING =================\n")
+
     # Title
-    os.system('cls')
     print(utils.UnderLN("\nWood Woods"))
     sleep(sec)
-    # If you have map, this gets run.
-    try:
-        if map == 1:
-            print("\nYou pull out the map that you got from the cartographer and think to yourself...")
-            choice = int(input("Use map or follow trail?: [1: Map / 2: Off Trail]: "))
-            if choice == 1:
-                print("\nYou decide that it would be foolish to even consider going outside the map's directions and follow it's directions.")
-                sleep(sec)
-                proceed = input("\nPress anything to proceed: ")
-                wood_woods_day_map()
-            elif choice == 2:
-                print("You decide to see where the off-roads take you.")
-                sleep(sec)
-                proceed = input("\nPress anything to proceed: ")
-                wood_woods_day_trail()
-            return map
-    except:
-        # This runs if you don't have map.
+    # If you have a map, this gets to run.
+    if has_map == 1:
+        print("\nYou pull out the map that you got from the cartographer and think to yourself...")
+        choice = int(input("Use your map or follow trail?: [1: Map / 2: Off Trail]: "))
+        if choice == 1:
+            print("\nYou decide that it would be foolish to even consider going outside the map's directions and follow it's directions.")
+            sleep(sec)
+            proceed = input("\nPress anything to proceed: ")
+            wood_woods_day_has_map()
+        elif choice == 2:
+            print("You decide to see where the off-roads take you.")
+            sleep(sec)
+            proceed = input("\nPress anything to proceed: ")
+            wood_woods_day_trail()
+    else:
+        # This runs if you don't have a map.
         print("\nSince there was no obvious path and you have no map, you decided to just keep moving into the forest blindly...")
         sleep(sec)
         proceed = ("\nPress anything to proceed: ")
         wood_woods_day_trail()
+    return sword, has_map, rations, Rogue, Chef
+    
         
 
 # Starting Wood Woods with a map
-def wood_woods_day_map():
+def wood_woods_day_has_map():
+    # Debug Info
+    if DEBUG == True:
+        print("\n================= DEBUGGING =================\n")
+        print(f"DEBUG: sword={sword}, has_map={has_map}, rations={rations}, Rogue={Rogue}, Chef={Chef}, Lives={lives}")
+        print("\n================= DEBUGGING =================\n")
+    
     print("\nBecause of your wise purchase of a map, you're able to know where the bad areas of the forest are and the direct path to the"
           " cave is. Just as things seem to go well, a tall knight in a black surcoat stands on a bridge, staring off into the distance.")
     sleep(sec)
@@ -374,7 +340,7 @@ def wood_woods_day_map():
     print("\nYou stare at the man confuzzled. Who is he to tell you what to do with only two limbs?")
     sleep(sec)
     # This choice is intentional!
-    choice1 = int(input("What do you do? [1=Push him over / 2=Push him over]: "))
+    choice1 = int(input("What do you do? [1: Push him over / 2: Push him over]: "))
     print("This man is clearly not gonna move. You point out a bird in the sky and he turns around.")
     sleep(sec)
     print("\n???: Where!?")
@@ -406,6 +372,12 @@ def wood_woods_day_trail():
 
 # Initiate the lumberjack
 def wood_woods_lumberjack(lives):
+    # Debug Info
+    if DEBUG == True:
+        print("\n================= DEBUGGING =================\n")
+        print(f"DEBUG: sword={sword}, has_map={has_map}, rations={rations}, Rogue={Rogue}, Chef={Chef}, Lives={lives}")
+        print("\n================= DEBUGGING =================\n")
+
     # If you have the rogue:
     if Rogue == 1:
         print(f"\n{Ally}: Hey, {Player_Name}, that isn't a monster behind those shrubs... It's a man. I'll let you decide how we play this out.")
@@ -513,6 +485,12 @@ def wood_woods_lumberjack(lives):
 
 # Meet the lumberjack
 def wood_woods_lumberjack_intro():
+    # Debug Info
+    if DEBUG == True:
+        print("\n================= DEBUGGING =================\n")
+        print(f"DEBUG: sword={sword}, has_map={has_map}, rations={rations}, Rogue={Rogue}, Chef={Chef}, Lives={lives}")
+        print("\n================= DEBUGGING =================\n")
+    
     print("\nLUMBERJACK: Hey little guy! What are you doing out here? Nobody comes through here for a frolick besids the foolish!")
     choice2 = int(input("\nHow do you answer? [1. I'm out to save the blacksmith's daughter! / 2. None of your business!]: "))
     # I'm saving Ivar's Daughter!
@@ -527,9 +505,9 @@ def wood_woods_lumberjack_intro():
     else:
         print("\nLUMBERJACK: All good buddy! When it's just you and man-eating creatures out here, a good word from a stranger is"
                 " entertaining!")
-    if map == 1:
+    if has_map == 1:
         print("Say little man, you need any pointers for these parts? I do live here.")
-        choice3 = int(input("\n[1. Yeah, can you read my map? / 2. I'm ok, thanks!]"))
+        choice3 = int(input("\n[1. Yeah, can you read my map! / 2. I'm ok, thanks!]"))
         if choice3 == 1:
             print("\nLUMBERJACK: Yeah, give it here!")
             print("\nHe takes the map from you and squats down so you can see where he is pointing to. It's all making sense now!")
@@ -558,7 +536,13 @@ def wood_woods_lumberjack_intro():
 
 # Start Wood Woods at Night
 def wood_woods_night():
-    print(utils.UnderLN("Wood Woods"))
+    # Debug Info
+    if DEBUG == True:
+        print("\n================= DEBUGGING =================\n")
+        print(f"DEBUG: sword={sword}, has_map={has_map}, rations={rations}, Rogue={Rogue}, Chef={Chef}, Lives={lives}")
+        print("\n================= DEBUGGING =================\n")
+    
+    print(utils.UnderLN("\nWood Woods"))
     sleep(sec)
     print("It's dark out. Very dark out, but nonetheless your spirits remain high. As far as you can see, it's just tall trees\n"
           "and ever-spanning hills. One of these directions leads to the cave you heard about. Supposedly, through the cave is the\n"
