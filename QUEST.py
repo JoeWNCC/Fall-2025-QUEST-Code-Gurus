@@ -43,7 +43,7 @@ lives = 3
 Player_Name = "Knight Guy"
 
 # ---------------- DEBUGGING ---------------- #
-DEBUG = True
+DEBUG = False
 if DEBUG == True:
     sec = 0
 else:
@@ -64,7 +64,7 @@ def chance_75():
 
 # ----- ROOMS ----- #
 def drab_town():
-    global sword, has_map, rations, Rogue, Chef, Ally, Player_Name, sec
+    global sword, has_map, rations, Rogue, Chef, Ally, Player_Name, sec, lives
 
     # Debug Info
     if DEBUG == True:
@@ -107,7 +107,7 @@ def drab_town():
     print("\nIVAR: You strange-folk and young'uns are after the thrill o' life anyway, so better give\n"
           "the next generation a fightin' chance!")
     sleep(sec)
-    print("Alright, no mo' nice words! Get out and save me lass!\n")
+    print("Alright, no mo' nice words! Get out and save me lass!")
     sleep(sec)
     print("\nYou jump out of your seat eagerly and clank your way out of the door. Time for adventure!\n")
     sleep(sec)
@@ -115,7 +115,6 @@ def drab_town():
     input("Press any key to proceed: ")
 
     os.system('cls' if os.name == 'nt' else 'clear')
-    sleep(sec)
     print("You make it to the town square and look around. There are shops all around you filled with\n"
           "different odds and ends, and some places that pique your interest; The armory.")
     sleep(sec)
@@ -152,12 +151,14 @@ def drab_town():
             else:
                 print("\nARMORY CLERK: All good, son! Does plenty good lookin’ pretty for me business!")
             sleep(sec)
+            os.system('cls' if os.name == 'nt' else 'clear')
 
         # ---------- CARTOGRAPHER ---------- #
         elif choice1 == "2":
             if has_map == 1:
                 print("\nCARTOGRAPHER: I already gave you my best map! What more do you want?")
                 sleep(sec)
+                os.system('cls' if os.name == 'nt' else 'clear')
                 continue
 
             print("\nYou make your way over to the fancy place of scrolls and maps and walk through\n"
@@ -175,16 +176,19 @@ def drab_town():
                 print("\nCARTOGRAPHER: —uh, pay that question no mind! Here is the map, and I wish you the best of luck!")
                 has_map = 1
                 shop_stops -= 1
+                sleep(sec)
                 print("\nYou got the MAP!\n")
             else:
                 print("\nCARTOGRAPHER: You sure? You think you can find the way just fine? Well, alright little man! Cya later!")
             sleep(sec)
+            os.system('cls' if os.name == 'nt' else 'clear')
 
         # ---------- BUTCHER ---------- #
         elif choice1 == "3":
             if rations > 0:
                 print("\nYou already have enough rations for your trip.")
                 sleep(sec)
+                os.system('cls' if os.name == 'nt' else 'clear')
                 continue
 
             print("\nYou wander over to the butcher shop, lured by the scent of cured ham. A gruff man\n"
@@ -221,6 +225,7 @@ def drab_town():
 
             # Chef path
             if hire == "1":
+                os.system('cls' if os.name == 'nt' else 'clear')
                 print("\nYou shout at the top of your lungs to get the short guys attention. He jumps off a table and pleads to you.")
                 sleep(sec)
                 print("\n???: O' please, sir knight! I'va been lookin' for someone to take me in! How do people not need a good cook in their quest!?")
@@ -238,9 +243,11 @@ def drab_town():
                 else:
                     print("\nCHEF: Good grief! I gotta change my approach!")
                 sleep(sec)
+                
 
             # Rogue path
             elif hire == "2":
+                os.system('cls' if os.name == 'nt' else 'clear')
                 print("\nYou swim through the sea of people and make it to the hooded figure in the corner. The voice of a woman breaks the silence...")
                 sleep(sec)
                 print("???: ... Hey... Did you need something?")
@@ -250,19 +257,17 @@ def drab_town():
                     Ally = "KANRA"
                     print(f"\n{Ally}: You want me for a quest? I've been looking for something to do... Thanks.")
                     sleep(sec)
-                    print(f"\n{Ally} Someone told me your name is {Player_Name}. Yeah, gotta say it suits you. Let's get going.")
+                    print(f"\n{Ally}: Someone told me your name is {Player_Name}. Yeah, gotta say it suits you. Let's get going.")
                     print(f"\nYou hired {Ally} the Rogue!")
                     shop_stops -= 1
                 else:
-                    print("\nROGUE: ...You seem to trust yourself, or maybe you lack trust in me. Shouldn’t be surprised...")
+                    print("\n???: ...You seem to trust yourself, or maybe you lack trust in me. Shouldn’t be surprised...")
                 sleep(sec)
             else:
                 print("\nYou changed your mind. The crowd here is kind of strange.")
                 sleep(sec)
-
         else:
             print("\nThat’s not a valid choice.")
-            sleep(sec)
 
     # ---------- POST-SHOP DECISION ---------- #
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -301,6 +306,7 @@ def drab_town():
 
 # Make choice Map/Trail
 def wood_woods_day_choice():
+    os.system('cls' if os.name == 'nt' else 'clear')
     # Debug Info
     if DEBUG == True:
         print("\n================= DEBUGGING =================\n")
@@ -333,6 +339,7 @@ def wood_woods_day_choice():
     
 # Starting Wood Woods with a map
 def wood_woods_day_has_map():
+    os.system('cls' if os.name == 'nt' else 'clear')
     # Debug Info
     if DEBUG == True:
         print("\n================= DEBUGGING =================\n")
@@ -372,18 +379,23 @@ def wood_woods_day_has_map():
 
 # Start of Wood Woods
 def wood_woods_day_trail():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print("As you walk amongst the forest aimlessly, you find a nice looking stick and think about"
           " how you may need a torch if it gets dark out. You found some space for it in your pack and"
           " kept on your merry way.")
     # You got a stick!
     Stick = 1
-
+    sleep(sec)
     print("\nHours have passed, none you have kept track of, but suddenly, stifling the peace is a growl"
           " of a large creature...")
+    sleep(sec)
     wood_woods_lumberjack(lives) 
 
 # Initiate the lumberjack
 def wood_woods_lumberjack(lives):
+    global sword, has_map, rations, Rogue, Chef, Ally, Player_Name, sec, Stick, Neck_Cloth
+    os.system('cls' if os.name == 'nt' else 'clear')
+
     # Debug Info
     if DEBUG == True:
         print("\n================= DEBUGGING =================\n")
@@ -393,65 +405,90 @@ def wood_woods_lumberjack(lives):
     # If you have the rogue:
     if Rogue == 1:
         print(f"\n{Ally}: Hey, {Player_Name}, that isn't a monster behind those shrubs... It's a man. I'll let you decide how we play this out.")
-    
+
+    sleep(sec)
     choice = int(input("\nWhatever it is, it hasn't noticed you... How should you proceed? [1. Investigate / 2. Sneak away / 3. Throw your stick at it]: "))
     # Investigate the noise.
     if choice == 1:
         print("\nYou decide that you need to see what this is. Your armor should hold you up fine if it comes down to a fight.")
+        sleep(sec)
         print("You breathe in... and then out, and swipe the brush away, and...")
+        sleep(sec)
         print("\nCRASH!")
+        sleep(sec)
         print("\nThe tree ahead hammers the earth right in front of you. The grunting is from no beast, but rather a hulking man in plaid;"
               " A lumber jack!")
-        
+        sleep(sec)
         print("\nLUMBERJACK: Stubborn pine! took ye long enough to come down!")
+        sleep(sec)
         print("\nHe turns around to fell the next pine and sees your small frame, fixated on the fallen tree.")
+        sleep(sec)
         wood_woods_lumberjack_intro()
         
     # Sneak by the creature.
     if choice == 2:
         if Rogue == 1:
             print("You decide not to draw attention to yourself. Who knows if this guy is truly trustworthy. Let's just not bother...")
+            sleep(sec)
         else:
             print("You decide it's best not to play with fire. No need to make any silly decisions when your full focus should be to your quest.")
+            sleep(sec)
     
     # Throw your stick at the sound!
     if choice == 3:
         print("\nYour intrusive thoughts get the better of you. You take out the stick from your pack and stare at it for a moment.")
+        sleep(sec)
         print("You throw it straight past the bush and you here a momentarily satisfying thunk.")
+        sleep(sec)
         print("\n???: OW! the hell!?")
+        sleep(sec)
         print("\nA huge, plaid, burly man jumps out of the bush on all-fours. He looks very irritated.")
+        sleep(sec)
         print("\nYou begin to panick. In the breif moment of thought that you have, you...\n")
-        
+        sleep(sec)
         if sword == 1:
             choice4 = int(input("[1. or 2. Don't Fight / 3. Fight]: "))
             if choice4 == 3:
                 # Draw your sword
                 print("\nYou reach for your blade in a hurry and try to find a stance to fight.")
+                sleep(sec)
                 print("Without a chance to think, he swings his axe sideways!")
-                chance = chance_50()
-                if chance == 1:
-                    print("\nYou manage to duck quickly and strike the hulking man in the temple with the pommel of your sword.")
-                    print("He slides against the forest floor five feet behind you, out cold. You breathe a sigh of relief.")
-                else:
-                    print("\nWHACK!")
-                    lives -= 1
-                    print(f"\nHe struck you in the side for a chunk of your life!")
-                    print(f"HEALTH REMAINING: {lives}/3")
-                    print("\nYou pick yourself back up and swing wildly in the guy's direction and nick him once. He reels back!")
-                    print("He turns completely and runs away from you, shouting swears as he disappears behind the tree filled hills.")
+                sleep(sec)
+                while True:
+                    chance = chance_50()
+                    if chance == 1:
+                        print("\nYou manage to duck quickly and strike the hulking man in the temple with the pommel of your sword.")
+                        sleep(sec)
+                        print("He slides against the forest floor five feet behind you, out cold. You breathe a sigh of relief.")
+                        sleep(sec)
+                        break
+                    else:
+                        print("\nWHACK!")
+                        lives -= 1
+                        sleep(sec)
+                        print(f"\nHe struck you in the side for a chunk of your life! You hit the ground hard, wheezing.")
+                        print(f"HEALTH REMAINING: {lives}/3")
+                        sleep(sec)
+                        if lives <= 0:
+                            print("\nYou were struck too many times... You tried to reach for your sword in with your last breath, but you felt a strong grip grab the back of your armor.")
+                            sleep(sec)
+                            print("\nBefore you could stop the brute, a strong punch bent through your armor and...\neverything went black...")
+                            sleep(sec)
+                            game_over()
+                        else:
+                            print("As you attempt to get up, he bounds toward you again!")
+                            sleep(sec)
+                            continue
                     
                 # if Chef is in your party
                 try:
                     if Chef == 1:
-                        print(f"\n{Ally}: I hate to say this so early, my man {Player_Name}, but I want no part of this if I'm going to be" 
-                                " in that kind of danger...")
-                        print(f"{Ally}: Just take this and I'll be on my way, good luck, guy!")
-                        Chef = 0
-                        Ally = "No one!"
-                        lives += 1
+                        print(f"\n{Ally}: Scary fight, sir knight, {Player_Name}, glad you made it in one piece...")
+                        print(f"\n{Ally}: Take this real quick! It's a salve, something my mama came up with!")
+                        if lives < 3:
+                            lives += 1
                         print("\nIt's a hastily put together first-aid kit. It's convenient but we've already lost our ally... Dang it...")
                         print(f"HEALTH REMAINING: {lives}/3")
-                        return lives
                 except:
                     pass
                 # if Rogue is in your party
@@ -497,6 +534,7 @@ def wood_woods_lumberjack(lives):
 
 # Meet the lumberjack
 def wood_woods_lumberjack_intro():
+    global sword, has_map, rations, Rogue, Chef, Ally, Player_Name, sec, Stick, Neck_Cloth
     # Debug Info
     if DEBUG == True:
         print("\n================= DEBUGGING =================\n")
@@ -611,3 +649,7 @@ def ruins():
 def sanctum():
     print(utils.UnderLN("Sanctum"))
     print("\nCOMING SOON!")
+
+def game_over():
+    utils.title("YOU HAVE FALLEN...")
+    os._exit()
