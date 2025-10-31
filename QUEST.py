@@ -213,7 +213,7 @@ def drab_town():
             print("\nYou end up getting stuck in the crowd of the pub. After you find some space, two individuals pique\n"
                   "your interest.")
             sleep(sec)
-            print("\nYou can see a hooded figure (a rogue) leaning against the far wall, and a short, noisy chef trying\n"
+            print("\nYou can see a hooded figure leaning against the far wall, and a short, noisy chef trying\n"
                   "to convince a group to hire him.")
             sleep(sec)
 
@@ -221,10 +221,18 @@ def drab_town():
 
             # Chef path
             if hire == "1":
+                print("\nYou shout at the top of your lungs to get the short guys attention. He jumps off a table and pleads to you.")
+                sleep(sec)
+                print("\n???: O' please, sir knight! I'va been lookin' for someone to take me in! How do people not need a good cook in their quest!?")
+                sleep(sec)
                 cook = input("\nTake him into your party? [y/any key] [WILL EXHAUST A SHOP STOP]: ").lower()
                 if cook == "y":
                     Chef = 1
-                    Ally = "Tonio"
+                    Ally = "TONIO"
+                    print(f"\n{Ally}: Many thanks to you, sir knight! If you have any meals you wish to prep, make great use of my culinary abilities!")
+                    sleep(sec)
+                    print(f"\n{Ally}: And your name is... {Player_Name}? Wonderfully picked! I'ma still call you sir knight though... I Hope you don't mind!")
+                    sleep(sec)
                     print(f"\nYou hired {Ally} the Chef!")
                     shop_stops -= 1
                 else:
@@ -233,10 +241,16 @@ def drab_town():
 
             # Rogue path
             elif hire == "2":
-                rogue = input("\nGive the rogue a chance? [y/any key] [WILL EXHAUST A SHOP STOP]: ").lower()
+                print("\nYou swim through the sea of people and make it to the hooded figure in the corner. The voice of a woman breaks the silence...")
+                sleep(sec)
+                print("???: ... Hey... Did you need something?")
+                rogue = input("\nHire the rogue? [y/any key] [WILL EXHAUST A SHOP STOP]: ").lower()
                 if rogue == "y":
                     Rogue = 1
-                    Ally = "Kanra"
+                    Ally = "KANRA"
+                    print(f"\n{Ally}: You want me for a quest? I've been looking for something to do... Thanks.")
+                    sleep(sec)
+                    print(f"\n{Ally} Someone told me your name is {Player_Name}. Yeah, gotta say it suits you. Let's get going.")
                     print(f"\nYou hired {Ally} the Rogue!")
                     shop_stops -= 1
                 else:
@@ -315,7 +329,6 @@ def wood_woods_day_choice():
         sleep(sec)
         proceed = ("\nPress anything to proceed: ")
         wood_woods_day_trail()
-    return sword, has_map, rations, Rogue, Chef
     
         
 
@@ -355,7 +368,7 @@ def wood_woods_day_has_map():
           " like you got through this very well. The map follows into the mouth of the cave, so you summon your courage and disappear"
           " into the darkness of the path ahead...")
     sleep(sec)
-    proceed = input("Press anything to proceed: ")
+    proceed = input("\nPress anything to proceed: ")
     cave()
 
 # Start of Wood Woods
