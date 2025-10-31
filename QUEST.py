@@ -288,7 +288,7 @@ def drab_town():
             print("\nYou summon your courage and press on into the dark of the woods alone.")
         input("Press any key to proceed: ")
         wood_woods_night()
-    
+
     # Return necessary variables (May be redundant now)
     if Ally != "To be decided":
         if Rogue == 1:
@@ -297,6 +297,7 @@ def drab_town():
             return Chef, sword, has_map, rations
     else:
         return sword, has_map, rations
+
 
 # Make choice Map/Trail
 def wood_woods_day_choice():
@@ -330,8 +331,6 @@ def wood_woods_day_choice():
         proceed = ("\nPress anything to proceed: ")
         wood_woods_day_trail()
     
-        
-
 # Starting Wood Woods with a map
 def wood_woods_day_has_map():
     # Debug Info
@@ -547,8 +546,10 @@ def wood_woods_lumberjack_intro():
     input("Press any button to continue: ")
     cave()
 
+
 # Start Wood Woods at Night
 def wood_woods_night():
+    global sword, has_map, rations, Rogue, Chef, Ally, Player_Name, sec, Stick, Neck_Cloth
     # Debug Info
     if DEBUG == True:
         print("\n================= DEBUGGING =================\n")
@@ -561,7 +562,40 @@ def wood_woods_night():
           "and ever-spanning hills. One of these directions leads to the cave you heard about. Supposedly, through the cave is the\n"
           "way to the ruins. You've got no choice but to follow that tip for right now, since anything could happen to Ivar's daughter.\n")
     sleep(sec)
-    print("\nEven if you had a map, it's too dark to see it.")
+    if has_map == 1:
+        print("\nUnfortuantely, you can't see the contents of your map... If only you had some kind of light.")
+    else:
+        print("\nEven if you had a map, it's too dark to see it.")
+    sleep(sec)
+    if Stick != 1:
+        print("Amidst your walking, you stumble upon a nice stick. You manage to find room in\n"
+              "your bag for it and stash it away.")
+    sleep(sec)
+    print("\nGiven it's night, it might not be a bad idea to light your torch. You could use your neck scarf\n"
+          "to add kindling to the stick... but you would lose it.")
+    # Make a torch spending your only neck scarf
+    choice = int(input("\nMake and set a torch alight? [1. Yes / 2. No ][ Uses Neck Scarf]: "))
+    if choice == 1:
+        Neck_Cloth = 0
+        print("\nNot being able to see would hinder your ability to navigate. Why try to get through this\n"
+              "darkness when you have this opportunity?")
+        sleep(sec)
+        proceed = ("\nPress anything to proceed: ")
+        wood_woods_night_torch()
+    else:
+        print("\nYou trust your gut. You believe that you can navigate through these woods with your internal\n"
+              "compass. You steady yourself and then press forward.")
+        sleep(sec)
+        proceed = ("\nPress anything to proceed: ")
+        wood_woods_night_dark()
+
+def wood_woods_night_torch ():
+    os.system('cls')
+    print("COMING SOON")
+
+def wood_woods_night_dark ():
+    os.system('cls')
+    print("COMING SOON")
 
 # Cave
 def cave():
