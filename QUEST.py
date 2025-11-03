@@ -255,9 +255,10 @@ def drab_town():
                 if rogue == "y":
                     Rogue = 1
                     Ally = "KANRA"
-                    print(f"\n{Ally}: You want me for a quest? I've been looking for something to do... Thanks.")
+                    print(f"\n???: You want me for a quest? I've been looking for something to do... Thanks.")
                     sleep(sec)
-                    print(f"\n{Ally}: Someone told me your name is {Player_Name}. Yeah, gotta say it suits you. Let's get going.")
+                    print(f"\n???: Someone told me your name is {Player_Name}. Yeah, gotta say it suits you. Let's get going.")
+                    print(f"{Ally}: My name is {Ally}, by the way. Nothing more, nothing less.")
                     print(f"\nYou hired {Ally} the Rogue!")
                     shop_stops -= 1
                 else:
@@ -291,6 +292,7 @@ def drab_town():
             print(f"\nYou and {Ally} make your way into the forest. Your silhouettes slowly sink into the darkness...")
         else:
             print("\nYou summon your courage and press on into the dark of the woods alone.")
+            sleep(sec)
         input("Press any key to proceed: ")
         wood_woods_night()
 
@@ -334,12 +336,11 @@ def wood_woods_day_choice():
         # This runs if you don't have a map.
         print("\nSince there was no obvious path and you have no map, you decided to just keep moving into the forest blindly...")
         sleep(sec)
-        proceed = ("\nPress anything to proceed: ")
+        input("\nPress anything to proceed: ")
         wood_woods_day_trail()
     
 # Starting Wood Woods with a map
 def wood_woods_day_has_map():
-    os.system('cls' if os.name == 'nt' else 'clear')
     # Debug Info
     if DEBUG == True:
         print("\n================= DEBUGGING =================\n")
@@ -359,7 +360,7 @@ def wood_woods_day_has_map():
     print("\nYou stare at the man confuzzled. Who is he to tell you what to do with only two limbs?")
     sleep(sec)
     # This choice is intentional!
-    choice1 = int(input("What do you do? [1: Push him over / 2: Push him over]: "))
+    input("What do you do? [1: Push him over / 2: Push him over]: ")
     print("This man is clearly not gonna move. You point out a bird in the sky and he turns around.")
     sleep(sec)
     print("\n???: Where!?")
@@ -381,7 +382,7 @@ def wood_woods_day_has_map():
 def wood_woods_day_trail():
     os.system('cls' if os.name == 'nt' else 'clear')
     print("As you walk amongst the forest aimlessly, you find a nice looking stick and think about"
-          " how you may need a torch if it gets dark out. You found some space for it in your pack and"
+          " how you may need a torch if it gets dark out.\n You found some space for it in your pack and"
           " kept on your merry way.")
     # You got a stick!
     Stick = 1
@@ -438,7 +439,7 @@ def wood_woods_lumberjack(lives):
     if choice == 3:
         print("\nYour intrusive thoughts get the better of you. You take out the stick from your pack and stare at it for a moment.")
         sleep(sec)
-        print("You throw it straight past the bush and you here a momentarily satisfying thunk.")
+        print("You throw it straight past the bush and you hear a momentarily satisfying thunk.")
         sleep(sec)
         print("\n???: OW! the hell!?")
         sleep(sec)
@@ -542,46 +543,63 @@ def wood_woods_lumberjack_intro():
         print("\n================= DEBUGGING =================\n")
     
     print("\nLUMBERJACK: Hey little guy! What are you doing out here? Nobody comes through here for a frolick besids the foolish!")
+    sleep(sec)
     choice2 = int(input("\nHow do you answer? [1. I'm out to save the blacksmith's daughter! / 2. None of your business!]: "))
     # I'm saving Ivar's Daughter!
     if choice2 == 1:
         print("\nLUMBERJACK: You mean old man Ivar? You could have used his name! He and I go way back. He used to bug me all the"
                 " time about lumber and charcoal for his forge!")
+        sleep(sec)
         print("\nLUMBERJACK: Besides that, his daughter isn't safe? I find that hard to believe... She's a fighter with a good noggin"
                 " on her shoulders, she wouldn't just be kidnapped, there's gotta be something more to this.")
+        sleep(sec)
         print("\nLUMBERJACK: My best tip for you, lad is to also think rationally. You may not have to resort to fighting with good chattin'"
                 " skills.")
+        sleep(sec)
     # I'm keeping my secrets!
     else:
         print("\nLUMBERJACK: All good buddy! When it's just you and man-eating creatures out here, a good word from a stranger is"
                 " entertaining!")
+        sleep(sec)
     if has_map == 1:
         print("Say little man, you need any pointers for these parts? I do live here.")
+        sleep(sec)
         choice3 = int(input("\n[1. Yeah, can you read my map! / 2. I'm ok, thanks!]"))
         if choice3 == 1:
             print("\nLUMBERJACK: Yeah, give it here!")
+            sleep(sec)
             print("\nHe takes the map from you and squats down so you can see where he is pointing to. It's all making sense now!")
+            sleep(sec)
             print("\nLUMBERJACK: Thanks for giving ol' redbeard a chance to help! Hope we meet again some other day, if nothing bad happens!")
+            sleep(sec)
             print("\nYou leave with a clear image in your head of the path you must take! No take the wrong turns for this guy!")
-            input("Enter any button to continue: ")
+            sleep(sec)
+            input("\nEnter any button to continue: ")
             # You travel to the ruins this way, skipping the cave!
             ruins()
         if choice3 == 2:
             print("\nLUMBERJACK: I like your confidence, metal man! A good spirit will take you far!")
+            sleep(sec)
             print("\nLUMBERJACK: Take care, don't get yourself hurt!")
+            sleep(sec)
             print("\nYou are not sure how you feel about being so protective of your quest, but you can rest well knowing you will not"
                     " likely not be followed.")
+            sleep(sec)
             print("\nAs night begins to fall, you approach the foot of a cave. Supposedly, this cave is the best way to the ruins and you have"
                 " no better choice than to trust this.")
-            input("Enter any button to continue: ")
+            sleep(sec)
+            input("\nEnter any button to continue: ")
             # Enter the cave
             cave()
 
     print("\nLUMBERJACK: It's good to meet friendly faces once in a while, you take care little guy!")
+    sleep(sec)
     print("\nYou wave back at him and keep following the path, knowing you made a good friend today.")
+    sleep(sec)
     print("\nYou approach the cave after a nice walk through the woods and meet the ominous mouth of the cave. It seems to be the only way to"
           " the ruins, so without wasting any more time, you summon your courage and disappear into the darkness forward.")
-    input("Press any button to continue: ")
+    sleep(sec)
+    input("\nPress any button to continue: ")
     cave()
 
 
