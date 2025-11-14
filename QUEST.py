@@ -446,7 +446,7 @@ def wood_woods_lumberjack(lives):
         print("\nYour intrusive thoughts get the better of you. You take out the stick from your pack and stare at it for a moment.")
         sleep(sec)
         print("You throw it straight past the bush and you hear a momentarily satisfying thunk. [-1 STICK]")
-        Stick -= 0
+        Stick -= 1
         sleep(sec)
         print("\n???: OW! the hell!?")
         sleep(sec)
@@ -863,7 +863,7 @@ def wood_woods_wolf(lives):
     while True:
         # Menus/Actions
         # ================ You have weapon/or Stick ================ #
-        if sword == 1 or Scary_axe == 1  and Stick > 0:
+        if sword == 1 or Scary_axe == 1 and Stick > 0:
             # Menu
             choice = input(
                 "\n[1. Run ]"
@@ -928,7 +928,7 @@ def wood_woods_wolf(lives):
             elif choice == "3":
                 print("\nYou instinctivly draw your weapon and swing hastily!")
                 sleep(sec)
-                chance = chance_50()
+                chance = chance_75()
                 if chance == 1:
                     print("\nYou slice the beast in the gut and it reels back and runs into the forest. Clearly, it made\n"
                     "a mistake picking a fight with you!")
@@ -943,7 +943,7 @@ def wood_woods_wolf(lives):
                     input("\nPress Enter to proceed: ")
                     cave()
                 else:
-                    print("You missed! The werewolf shoves you down to the ground. You can hardly breathe.")
+                    print("\nYou missed! The werewolf shoves you down to the ground. You can hardly breathe.")
                     lives -= 1
                     sleep(sec)
 
@@ -1052,7 +1052,7 @@ def wood_woods_wolf(lives):
             elif choice == "3":
                 print("\nYou instinctivly draw your weapon and swing hastily!")
                 sleep(sec)
-                chance = chance_50()
+                chance = chance_75()
                 if chance == 1:
                     print("\nYou slice the beast in the gut and it reels back and runs into the forest. Clearly, it made\n"
                     "a mistake picking a fight with you!")
@@ -1067,7 +1067,7 @@ def wood_woods_wolf(lives):
                     input("\nPress Enter to proceed: ")
                     cave()
                 else:
-                    print("You missed! The werewolf shoves you down to the ground. You can hardly breathe.")
+                    print("\nYou missed! The werewolf shoves you down to the ground. You can hardly breathe.")
                     lives -= 1
                     sleep(sec)
 
