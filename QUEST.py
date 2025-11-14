@@ -35,7 +35,6 @@ Werewolf = False
 Ally = "To be decided"
 
 # Event Variables
-Stalked = False
 Focus = False
 chance = 0
 lives = 3
@@ -43,7 +42,7 @@ lives = 3
 Player_Name = "Knight Guy"
 
 # ---------------- DEBUGGING ---------------- #
-DEBUG = False
+DEBUG = True
 if DEBUG == True:
     sec = 0
 else:
@@ -62,7 +61,7 @@ def chance_75():
     random = randint(1, 4)
     return random
 
-# ----- ROOMS ----- #
+# ----- PLACES ----- #
 def drab_town():
     global sword, has_map, rations, Rogue, Chef, Ally, Player_Name, sec, lives
 
@@ -132,6 +131,10 @@ def drab_town():
         # ---------- ARMORY ---------- #
         if choice1 == "1":
             if sword == 1:
+                print("You know what's better than one sword? Two swords!")
+                sleep(sec)
+                print("You jog back to the armory and tug on the apron of the smith guy. The armory clerk turns to you and squats down to your level.\n")
+                sleep(sec)
                 print("\nARMORY CLERK: Little one, even if I did have an extra sword, you would not be able to carry it reasonably... Check out the other places lad!")
                 sleep(sec)
                 continue
@@ -305,7 +308,6 @@ def drab_town():
     else:
         return sword, has_map, rations
 
-
 # Make choice Map/Trail
 def wood_woods_day_choice():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -325,12 +327,12 @@ def wood_woods_day_choice():
         if choice == 1:
             print("\nYou decide that it would be foolish to even consider going outside the map's directions and follow it's directions.")
             sleep(sec)
-            proceed = input("\nPress anything to proceed: ")
+            input("\nPress anything to proceed: ")
             wood_woods_day_has_map()
         elif choice == 2:
             print("You decide to see where the off-roads take you.")
             sleep(sec)
-            proceed = input("\nPress anything to proceed: ")
+            input("\nPress anything to proceed: ")
             wood_woods_day_trail()
     else:
         # This runs if you don't have a map.
@@ -429,17 +431,22 @@ def wood_woods_lumberjack(lives):
     # Sneak by the creature.
     if choice == 2:
         if Rogue == 1:
-            print("You decide not to draw attention to yourself. Who knows if this guy is truly trustworthy. Let's just not bother...")
+            print("\nYou decide not to draw attention to yourself. Who knows if this guy is truly trustworthy. Let's just not bother...")
             sleep(sec)
+            input("Press enter to proceed: ")
+            cave()
         else:
-            print("You decide it's best not to play with fire. No need to make any silly decisions when your full focus should be to your quest.")
+            print("\nYou decide it's best not to play with fire. No need to make any silly decisions when your full focus should be to your quest.")
             sleep(sec)
+            input("Press enter to proceed: ")
+            cave()
     
     # Throw your stick at the sound!
     if choice == 3:
         print("\nYour intrusive thoughts get the better of you. You take out the stick from your pack and stare at it for a moment.")
         sleep(sec)
-        print("You throw it straight past the bush and you hear a momentarily satisfying thunk.")
+        print("You throw it straight past the bush and you hear a momentarily satisfying thunk. [-1 STICK]")
+        Stick -= 0
         sleep(sec)
         print("\n???: OW! the hell!?")
         sleep(sec)
@@ -627,44 +634,786 @@ def wood_woods_night():
         print("Amidst your walking, you stumble upon a nice stick. You manage to find room in\n"
               "your bag for it and stash it away.")
     sleep(sec)
-    print("\nGiven it's night, it might not be a bad idea to light your torch. You could use your neck scarf\n"
+    print("\nGiven it's night, it might not be a bad idea to light a torch. You could use your neck scarf\n"
           "to add kindling to the stick... but you would lose it.")
     # Make a torch spending your only neck scarf
     choice = int(input("\nMake and set a torch alight? [1. Yes / 2. No ][ Uses Neck Scarf]: "))
     if choice == 1:
+        # TORCH ROUTE
         Neck_Cloth = 0
+        Stick -= 1
         print("\nNot being able to see would hinder your ability to navigate. Why try to get through this\n"
               "darkness when you have this opportunity?")
         sleep(sec)
-        proceed = ("\nPress anything to proceed: ")
+        input("\nPress anything to proceed: ")
         wood_woods_night_torch()
     else:
+        # DARK ROUTE
         print("\nYou trust your gut. You believe that you can navigate through these woods with your internal\n"
               "compass. You steady yourself and then press forward.")
         sleep(sec)
-        proceed = ("\nPress anything to proceed: ")
+        input("\nPress anything to proceed: ")
         wood_woods_night_dark()
 
-def wood_woods_night_torch ():
-    os.system('cls')
-    print("COMING SOON")
+def wood_woods_night_torch():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("The trail goes ever on. You try to count the time that's passed since you embarked from camp but with\n"
+          "the sun down, there's no point in trying.")
+    sleep(sec)
+    print("As long as you keep moving, you know you're making progress.")
 
+    # === DIALOGUE PORTION === #
+    if Ally != "To be decided":
+        print("You begin to stare at your feet, like your head was getting heavy. You're tired from what seems to be\n" 
+              "'hiker's hypnosis'.\n")
+        sleep(sec)
+        print(f"Just before you begin to sleep-walk, {Ally} taps on your helmet.")
+        # ========== Dialogue Time! =========== #
+        if Rogue == 1:
+            print(f"{Ally}: Hey, keep your head up man. You're awfully relaxed in these woods, do you not know what's\n"
+                  "out there?\n")
+            sleep(sec)
+            print(f"{Ally}: Whether you do or not, stay alert. Would it helped you if we talked about something?\n")
+            choice = input("How do you respond? [1. Yes / 2. No]: ")
+            if choice == "1":
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("\nYou heave your head up and nod weakly.")
+                sleep(sec)
+                print(f"\n{Ally}: Hmm, ok... How about... I ask you a question first, and then you ask me something?")
+                sleep(sec)
+                print(f"{Ally}: I probably should have asked this sooner, but who really are you?")
+                sleep(sec)
+                print("\nYou pause for a moment... who exactly are you? You had not thought about that much. Regardless, you\n"
+                      "try to explain to her...")
+                sleep(sec)
+                input("Press Enter to proceed: ")
+                os.system('cls' if os.name == 'nt' else 'clear')
+                # PLAYER CHARACTER INTRODUCTION
+                print(f"\nYou tell her that you are {Player_Name} heiled from the Kingdom of Wynveld. You were a former\n"
+                      "member of the kings direct guards, but after seeing the injustice of the monarchy and the crimes\n"
+                      "they let fly in favor of petty matters, you left to become a mercenary for the people and live a\n"
+                      "transient life on the road, wherever the road takes you.")
+                sleep(sec)
+                print("\nYou also mention to her that you like a nicely seasoned steak, playing chess, and long walks on\n"
+                "the beach.")
+                sleep(sec)
+                print(f"\n{Ally}: What a life, man. I respect the decision to help other people and take charge of things\n"
+                      "that bother you.")
+                sleep(sec)
+                print(f"{Ally}: Oh, and, do you take off the helmet ever? Can I see your face?")
+                sleep(sec)
+                print("You promptly shake your head no. The helmet never comes off.")
+                sleep(sec)
+                print(f"\n{Ally}: OK! ok... I won't ask again... Now I'm a rogue of my word, ask me something, {Player_Name}.")
+                sleep(sec)
+                while True:
+                    choice2 = input("\n[1. Who are you? ]\n[2. What do you like? ]\n[3. Do you know the blacksmith's daughter?]\n"
+                                    "How do you respond:")
+                    # Who are you?
+                    if choice2 == "1":
+                        print(f"\n{Ally}: You already know my name is Kanra. Besides that, I ended up getting separated from my family\n"
+                              "in a skirmish with the Kolutz raiders with no idea how my family faired. I was only 8 years old... I learned\n"
+                              "everything I know for the rogue path from previous adventures and others who made all the mistakes before me.\n")
+                        sleep(sec)
+                        print(f"{Ally}: I can't think of anything else I want to add... and no, I don't want to talk about those damn Kolutz scum...")
+                        break
+                    # What do you like?
+                    elif choice2 == "2":
+                        print(f"\n{Ally}: Silly question, but it's fair you ask.")
+                        sleep(sec)
+                        print(f"\n{Ally}: I like to hunt, I love animals, and I adore adventure. I'm not proud to admit it, but I also have a habit\n"
+                              "of being a pickpocket from time to time. No worries, it's just the wealthy I take from. It's not just for me though,\n"
+                              "Many others would find better use of their coin and trinkets than they would have the patience to find for themselves")
+                        sleep(sec)
+                        print(f"\n{Ally}: Now, being a pickpocket is a theif thing, not a rogue thing, let me get that straight... Although,\n"
+                              "I suppose that makes me a theif. Ehh, whatever.")
+                        break
+                    # Do you know the blacksmith's daughter
+                    elif choice2 == "3":
+                        print(f"\n{Ally}: Old Ivar's daughter? Not super well, but I can remember one of the rare times that man used her actual name.\n"
+                              "I believe it was Gwyndolin? I doubt that will be useful to you, but whatever.")
+                        sleep(sec)
+                        print(f"\n{Ally}: Before she disappeared, I can remember a time she threw a hose at Ivar and he panicked like he had a snake on\n"
+                              "his shoulders. Couldn't forget that.")
+                        break
+                    # Handle incorrect input
+                    else:
+                        print(f"\n{Ally}: Uh... Could you repeat that?")
+                        sleep(sec)
+                        continue
+                
+                print(f"\n{Ally}: I know this whole chat we had was to keep your sleepy head awake, but I enjoyed myself... Thanks...")
+ 
+            else:
+                print(f"{Ally}: No pressure... just be alert then. I know you didn't hire me to babysit you.")
+
+        if Chef == 1:
+            print(f"{Ally}: Mr. Knight! Don't doze off, are you mad!? I can't fend for myself out here if you fall asleep!")
+            sleep(sec)
+            print(f"{Ally}: Oh, I got a solution for you! Let's chat. That'll keep you on your feet. I haven't even asked who you\n"
+                  "are. You should introduce yourself. Now!")
+            sleep(sec)
+            print("\nYou pause for a moment... who exactly are you? You had not thought about that much.")
+            sleep(sec)
+            input("Press Enter to proceed: ")
+            # PLAYER CHARACTER INTRODUCTION
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print(f"\nYou tell him that you are {Player_Name} heiled from the Kingdom of Wynveld. You were a former\n"
+                   "member of the kings direct guards, but after seeing the injustice of the monarchy and the crimes\n"
+                   "they let fly in favor of petty matters, you left to become a mercenary for the people and live a\n"
+                   "transient life on the road, wherever the road takes you.")
+            sleep(sec)
+            print("\nYou also mention to him that you like a nicely seasoned steak, playing chess, and long walks on\n"
+                  "the beach.")
+            sleep(sec)
+            print(f"\n{Ally}: Good greif, What a hard lifestyle to give up! I can tell you this, it's so much livelier on\n"
+                  "an adventure. So much to learn and do, but most importantly, nothing like completing a quest and relaxing\n"
+                  "on the earnings! I'd argue it keeps ya humble!")
+            sleep(sec)
+            print(f"\n{Ally}: Also, is it fate that a steak lover teams up with a cook? I'd like to think so, ho-ho!")
+            sleep(sec)
+            print(f"\n{Ally}: Ok, I've asked the questions, surely your burning for an answer too! Ask me something Sir Knight!")
+            sleep(sec)
+            while True:
+                choice = input("\n[1. Who are you? ]\n[2. Why the chef life? ]\n[3. What's your favourite food? ]\nWhat do you ask him?: ")
+                # Who are you?
+                if choice == "1":
+                    print(f"\n{Ally}: I've already told you my name is Tonio, but if you need to hear my exquisite background, Let me\n"
+                          "start with this;")
+                    sleep(sec)
+                    print(f"\n{Ally}: I've been a cook for Drab Town as long as I can remember, but I was done working with potatos,\n"
+                          "Veggies and commoner food... I wanted to find richer things... Things that perfect even the blandest thing...\n"
+                          "By traveling with you, I have hope of finding the 'All-Seasoning'... One seasoning to rule them all and in\n"
+                          "consumerism bind them. I never want to taste dubious meals again!")
+                    sleep(sec)
+                    print(f"\n{Ally}: I've found two of the seasonings desired so far... Namely, Grinded up garlic, salt, and one more\n"
+                          "ingredient I shan't name, because a good chef never reveals his secret!")
+                    sleep(sec)
+                    break
+                # Why the chef life?
+                elif choice == "2":
+                    print(f"\n{Ally}: I come from a far land where a manhood was deemed worthy if said man could cook better than the others.\n"
+                          "The place I call home is known as the Caiman Peninsula. I still miss the taste of salt on a spit roasted sea bass...")
+                    sleep(sec)
+                    print(f"\n{Ally}: I'm after the all seasoning... I have two of the necessary ingredients for it but I missing just one more...\n")
+                    sleep(sec)
+                    print(f"\n{Ally}: What? No, I can't tell you what it is! A good chef keeps his secret ingredient a secret!")
+                    break
+                # What's your favourite food?
+                elif choice == "3":
+                    print(f"\n{Ally}: Are you kidding me? I couldn't decide what my favourite food is! I love it all!")
+                    sleep(sec)
+                    print(f"\n{Ally}: However, there is one thing I wouldn't mind having again. I think that would be the giant buffet kebab I had\n"
+                          "before I left home for spices, herbs, seasoning, and whatnot...")
+                    sleep(sec)
+                    break
+                # Handle exception
+                else:
+                    print(f"\n{Ally}: What was that, Mr. Sir Knight Guy?")
+                    continue
+            
+            print(f"\n{Ally}: Good chat, Sir {Player_Name}! I'll never hesitate to talk about the finest thing in life... Food!")
+
+    print("\nAs time progressed, you began to notice that there was more leave crunching than there should be when you walked.\n"
+          "Everytime you stopped to check for it, there was no more sound. You felt a chill run down your spine.")
+    sleep(sec)
+    if Rogue == 1:
+        print(f"\n{Ally}: I hear it too... I'm almost positive we are being stalked, but I have no idea who or what it could be...\n"
+              "Proceed carefully...")
+    while True:
+        choice = input("You can't ignore it anymore. How do you act?: [1. Investigate the noise / 2. Keep moving quietly ]: ")
+        # Investigate
+        if choice == "1":
+            print("If it's kept track of you thus far, you might as well stand your ground. You clench your fists and force\n"
+                  "yourself forward.")
+            sleep(sec)
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print("...")
+            sleep(sec)
+            print("...")
+            sleep(sec)
+            print("... Suddenly, you notice a silhouette grow over your torch light...")
+            sleep(sec)
+            print("You turn slowly, and your heart sinks to your gut...")
+            sleep(sec)
+            print("From behind, a werewolf towers over you, right in front of where your standing. Waiting for sudden movement.")
+            sleep(sec)
+            wood_woods_wolf(lives)
+            break
+
+        # Keep moving
+        elif choice == "2":
+            print("You think you should just keep moving... the more miles we move the further we are from the potential threat.")
+            sleep(sec)
+            print("After ages on the road, you finally make it to the cave. It's truly incredible you managed to get through the\n"
+                  "night unscathed.")
+            sleep(sec)
+            if rations != 0:
+                print("You check your pack, but notice that your rations are gone. Maybe that weird sound took it. Whatever the\n"
+                "circumstance is, you're glad that it's the rations that are gone and not yourself.")
+                sleep(sec)
+            cave()
+            break
+        else:
+            print("\nThat's not a choice!\n")
+            continue
+
+def wood_woods_wolf(lives):
+    global sword, Scary_axe, rations, Rogue, Chef, Ally, Player_Name, sec, Stick, Werewolf
+    while True:
+        # Menus/Actions
+        # ================ You have weapon/or Stick ================ #
+        if sword == 1 or Scary_axe == 1  and Stick > 0:
+            # Menu
+            choice = input(
+                "\n[1. Run ]"
+                "\n[2. Plead ]"
+                "\n[3. Fight ]"
+                "\n[4. Throw Stick ]"
+                "\nTension is high. what do you do: ")
+
+            # Actions
+            if choice == "1":
+                print("\nWithout wasting a second, you bolt past the beast and attempt to run away.")
+                sleep(sec)
+                print("Unfortunately, what was once stalking you is now bounding towards you. It gaining on you!")
+                sleep(sec)
+                chance = chance_50()
+                if chance == 1:
+                    print("\nIn your mad dash for survival, you notice the cave just ahead, across a cliff. With no better way\n"
+                          "out of this predicament, you summon your courage...")
+                    sleep(sec)
+                    print("\nYou leap forward, tuck, and roll back onto your feet on the other side!")
+                    sleep(sec)
+                    print("\nThe beast stops dead in it's tracks... It looks down at the pit, and back at you mournfully as it\n"
+                          "turns back into the woods.")
+                    sleep(sec)
+                    print("Good god, your alive!")
+                    sleep(sec)
+                    print("\nWhen you regain your breath, you turn to face the cave. Your destination! It even has a road sign\n"
+                          "that says it leads to the ruins!")
+                    if Ally != "To be decided":
+                        print(f"{Ally}: There it is, {Player_Name}! There's the cave!")
+                    sleep(sec)
+                    input("\nPress Enter to proceed: ")
+                    cave()
+                else:
+                    print("\nCRUNCH!!!")
+                    lives -= 1
+                    sleep(sec)
+
+                    # If you ran out of lives (Death)
+                    if lives == 0:
+                        print("\nYou no longer have the strength to pry the beast off of you. As you begin lose consciousness, the monster\n"
+                        "drags your fading body away into the woods...")
+                        sleep()
+                        input("\nPress Enter: ")
+                        game_over()
+                    
+                    # You survive the strike
+                    print("\nThe monster bit into your side! You smack the wolf in the nose and it reels back. You take\n"
+                          "your chance to stand back up!")
+                    sleep(sec)
+                    input("\nPress Enter:")
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    continue
+            elif choice == "2":
+                print("\nFear gripped too tightly in your chest and all you could think of doing was curling up and\n"
+                "pleading for your safety.")
+                sleep(sec)
+                print("\nInstead of being shown mercy, you were promptly returned to the food chain for your lack of will\n"
+                "to defend yourself...")
+                input("\nPress Enter: ")
+                game_over()
+            elif choice == "3":
+                print("\nYou instinctivly draw your weapon and swing hastily!")
+                sleep(sec)
+                chance = chance_50()
+                if chance == 1:
+                    print("\nYou slice the beast in the gut and it reels back and runs into the forest. Clearly, it made\n"
+                    "a mistake picking a fight with you!")
+                    sleep(sec)
+                    print("\nYou look around. Dazed after the fight and notice that the skirmish of battle has brought you to the cave.")
+                    sleep(sec)
+                    if Rogue == 1:
+                        print(f"\n{Ally}: Geez! Are you ok!? Remember when I said do you know what's out there? Be careful!")
+                        sleep(sec)
+                        print(f"\n{Ally}: Well, besides all that, look! It's the cave!")
+                        sleep(sec)
+                    input("\nPress Enter to proceed: ")
+                    cave()
+                else:
+                    print("You missed! The werewolf shoves you down to the ground. You can hardly breathe.")
+                    lives -= 1
+                    sleep(sec)
+
+                    # If you run out of lives
+                    if lives == 0:
+                        print("\nYou no longer have the strength to pry the beast off of you. As you begin lose consciousness, the monster\n"
+                        "drags your fading body away into the woods...")
+                        sleep(sec)
+                        input("\nPress Enter: ")
+                        game_over()
+
+                    # If you survived
+                    print("You roll back to your feet and face the beast again!")
+                    sleep(sec)
+                    continue
+            elif choice == "4":
+                print("\nYou take the stick out of your bag slowly, raise it above your head, and then throw it.")
+                sleep(sec)
+                print("\nThe beast is instantly distracted and bounds after the stick. That was easy.")
+                sleep(sec)
+                print("Just as you begin to walk away, the werewolf brings the stick back. Oh no.")
+                sleep(sec)
+                print("\n   The Werewolf joins your party\n")
+                Werewolf = True
+                sleep(sec)
+                input("Press Enter to proceed: ")
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("After tossing the stick a few times, the beast urges you to follow it. You can't convince it\n"
+                "to leave you alone, so you follow it.")
+                sleep(sec)
+                print("\n... What do you know!? It's the cave! The werewolf took you to the cave you searched for! Let's waste\n"
+                      "no time, let's keep going!")
+                sleep(sec)
+                if Rogue == 1:
+                    print(f"\n{Ally}: What the hell!? No one is going to believe this...")
+                    sleep(sec)
+                input("Press Enter to proceed: ")
+                cave()
+            else:
+                print("\nWrong number input... try that again!\n")
+                continue
+        # ==================== You have sword/axe =================== #
+        elif Scary_axe or sword == 1:
+            # Menu
+            choice = input(
+                "\n[1. Run ]"
+                "\n[2. Plead ]"
+                "\n[3. Fight ]"
+                "\nTension is high. what do you do: ")
+            
+            # Actions
+            if choice == "1":
+                print("\nWithout wasting a second, you bolt past the beast and attempt to run away.")
+                sleep(sec)
+                print("Unfortunately, what was once stalking you is now bounding towards you. It gaining on you!")
+                sleep(sec)
+                chance = chance_50()
+                if chance == 1:
+                    print("\nIn your mad dash for survival, you notice the cave just ahead, across a cliff. With no better way\n"
+                          "out of this predicament, you summon your courage...")
+                    sleep(sec)
+                    print("\nYou leap forward, tuck, and roll back onto your feet on the other side!")
+                    sleep(sec)
+                    print("\nThe beast stops dead in it's tracks... It looks down at the pit, and back at you mournfully as it\n"
+                          "turns back into the woods.")
+                    sleep(sec)
+                    print("Good god, your alive!")
+                    sleep(sec)
+                    print("\nWhen you regain your breath, you turn to face the cave. Your destination! It even has a road sign\n"
+                          "that says it leads to the ruins!")
+                    if Ally != "To be decided":
+                        print(f"{Ally}: There it is, {Player_Name}! There's the cave!")
+                    sleep()
+                    input("\nPress Enter to proceed: ")
+                    cave()
+                else:
+                    print("\nCRUNCH!!!")
+                    lives -= 1
+                    sleep(sec)
+
+                    # If you ran out of lives (Death)
+                    if lives == 0:
+                        print("\nYou no longer have the strength to pry the beast off of you. As you begin lose consciousness, the monster\n"
+                        "drags your fading body away into the woods...")
+                        sleep()
+                        input("\nPress Enter: ")
+                        game_over()
+                    
+                    # You survive the strike
+                    print("\nThe monster bit into your side! You smack the wolf in the nose and it reels back. You take\n"
+                          "your chance to stand back up!")
+                    sleep(sec)
+                    input("\nPress Enter:")
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    continue
+
+                pass
+            elif choice == "2":
+                print("\nFear gripped too tightly in your chest and all you could think of doing was curling up and\n"
+                "pleading for your safety.")
+                sleep(sec)
+                print("\nInstead of being shown mercy, you were promptly returned to the food chain for your lack of will\n"
+                "to defend yourself...")
+                input("\nPress Enter: ")
+                game_over()
+            elif choice == "3":
+                print("\nYou instinctivly draw your weapon and swing hastily!")
+                sleep(sec)
+                chance = chance_50()
+                if chance == 1:
+                    print("\nYou slice the beast in the gut and it reels back and runs into the forest. Clearly, it made\n"
+                    "a mistake picking a fight with you!")
+                    sleep(sec)
+                    print("\nYou look around. Dazed after the fight and notice that the skirmish of battle has brought you to the cave.")
+                    sleep(sec)
+                    if Rogue == 1:
+                        print(f"\n{Ally}: Geez! Are you ok!? Remember when I said do you know what's out there? Be careful!")
+                        sleep(sec)
+                        print(f"\n{Ally}: Well, besides all that, look! It's the cave!")
+                        sleep(sec)
+                    input("\nPress Enter to proceed: ")
+                    cave()
+                else:
+                    print("You missed! The werewolf shoves you down to the ground. You can hardly breathe.")
+                    lives -= 1
+                    sleep(sec)
+
+                    # If you run out of lives
+                    if lives == 0:
+                        print("\nYou no longer have the strength to pry the beast off of you. As you begin lose consciousness, the monster\n"
+                        "drags your fading body away into the woods...")
+                        sleep(sec)
+                        input("\nPress Enter: ")
+                        game_over()
+
+                    # If you survived
+                    print("You roll back to your feet and face the beast again!")
+                    sleep(sec)
+                    continue
+            else:
+                print("\nWrong number input... try that again!\n")
+                continue
+        # ===================== You have rations ===================== #
+        elif Stick != 0:
+            # Menu
+            choice = input(
+                "\n[1. Run ]"
+                "\n[2. Plead]"
+                "\n[3. Throw Stick ]"
+                "\nTension is high. what do you do: ")
+            
+            # Actions
+            if choice == "1":
+                print("\nWithout wasting a second, you bolt past the beast and attempt to run away.")
+                sleep(sec)
+                print("Unfortunately, what was once stalking you is now bounding towards you. It gaining on you!")
+                sleep(sec)
+                chance = chance_50()
+                if chance == 1:
+                    print("\nIn your mad dash for survival, you notice the cave just ahead, across a cliff. With no better way\n"
+                          "out of this predicament, you summon your courage...")
+                    sleep(sec)
+                    print("\nYou leap forward, tuck, and roll back onto your feet on the other side!")
+                    sleep(sec)
+                    print("\nThe beast stops dead in it's tracks... It looks down at the pit, and back at you mournfully as it\n"
+                          "turns back into the woods.")
+                    sleep(sec)
+                    print("Good god, your alive!")
+                    sleep(sec)
+                    print("\nWhen you regain your breath, you turn to face the cave. Your destination! It even has a road sign\n"
+                          "that says it leads to the ruins!")
+                    if Ally != "To be decided":
+                        print(f"\n{Ally}: There it is, {Player_Name}! There's the cave!")
+                    sleep(sec)
+                    input("\nPress Enter to proceed: ")
+                    cave()
+                else:
+                    print("\nCRUNCH!!!")
+                    lives -= 1
+                    sleep(sec)
+
+                    # If you ran out of lives (Death)
+                    if lives == 0:
+                        print("\nYou no longer have the strength to pry the beast off of you. As you begin lose consciousness, the monster\n"
+                        "drags your fading body away into the woods...")
+                        sleep()
+                        input("Press Enter: ")
+                        game_over()
+                    
+                    # You survive the strike
+                    print("\nThe monster bit into your side! You smack the wolf in the nose and it reels back. You take\n"
+                          "your chance to stand back up!")
+                    sleep(sec)
+                    input("\nPress Enter:")
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    continue
+            elif choice == "2":
+                print("\nFear gripped too tightly in your chest and all you could think of doing was curling up and\n"
+                "pleading for your safety.")
+                sleep(sec)
+                print("\nInstead of being shown mercy, you were promptly returned to the food chain for your lack of will\n"
+                "to defend yourself...")
+                input("\nPress Enter: ")
+                game_over()
+            elif choice == "3":
+                print("\nYou take the stick out of your bag slowly, raise it above your head, and then throw it.")
+                sleep(sec)
+                print("\nThe beast is instantly distracted and bounds after the stick. That was easy.")
+                sleep(sec)
+                print("Just as you begin to walk away, the werewolf brings the stick back. Oh no.")
+                sleep(sec)
+                print("\n   The Werewolf joins your party\n")
+                Werewolf = True
+                sleep(sec)
+                input("Press Enter to proceed: ")
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("After tossing the stick a few times, the beast urges you to follow it. You can't convince it\n"
+                "to leave you alone, so you follow it.")
+                sleep(sec)
+                print("\n... What do you know!? It's the cave! The werewolf took you to the cave you searched for! Let's waste\n"
+                      "no time, let's keep going!")
+                sleep(sec)
+                if Rogue == 1:
+                    print(f"\n{Ally}: What the hell!? No one is going to believe this...")
+                    sleep(sec)
+                input("Press Enter to proceed: ")
+                cave()
+            else:
+                print("\nWrong number input... try that again!\n")
+                continue
+        # =============== You don't have special items =============== #
+        else:
+            # Menu
+            choice = input(
+                "\n[1. Run ]"
+                "\n[2. Plead]"
+                "\nTension is high. what do you do: ")
+            
+            # Actions
+            if choice == "1":
+                print("\nWithout wasting a second, you bolt past the beast and attempt to run away.")
+                sleep(sec)
+                print("Unfortunately, what was once stalking you is now bounding towards you. It gaining on you!")
+                sleep(sec)
+                chance = chance_50()
+                if chance == 1:
+                    print("\nIn your mad dash for survival, you notice the cave just ahead, across a cliff. With no better way\n"
+                          "out of this predicament, you summon your courage...")
+                    sleep(sec)
+                    print("\nYou leap forward, tuck, and roll back onto your feet on the other side!")
+                    sleep(sec)
+                    print("\nThe beast stops dead in it's tracks... It looks down at the pit, and back at you mournfully as it\n"
+                          "turns back into the woods.")
+                    sleep(sec)
+                    print("Good god, your alive!")
+                    sleep(sec)
+                    print("\nWhen you regain your breath, you turn to face the cave. Your destination! It even has a road sign\n"
+                          "that says it leads to the ruins!")
+                    if Ally != "To be decided":
+                        print(f"{Ally}: There it is, {Player_Name}! There's the cave!")
+                    sleep(sec)
+                    input("\nPress Enter to proceed: ")
+                    cave()
+                else:
+                    print("\nCRUNCH!!!")
+                    lives -= 1
+                    sleep(sec)
+
+                    # If you ran out of lives (Death)
+                    if lives == 0:
+                        print("\nYou no longer have the strength to pry the beast off of you. As you begin lose consciousness, the monster\n"
+                        "drags your fading body away into the woods...")
+                        sleep()
+                        input("\nPress Enter: ")
+                        game_over()
+                    
+                    # You survive the strike
+                    print("\nThe monster bit into your side! You smack the wolf in the nose and it reels back. You take\n"
+                          "your chance to stand back up!")
+                    sleep(sec)
+                    input("\nPress Enter:")
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    continue
+            elif choice == "2":
+                print("\nFear gripped too tightly in your chest and all you could think of doing was curling up and\n"
+                "pleading for your safety.")
+                sleep(sec)
+                print("\nInstead of being shown mercy, you were promptly returned to the food chain for your lack of will\n"
+                "to defend yourself...")
+                input("\nPress Enter: ")
+                game_over()
+            else:
+                print("\nWrong number input... try that again!\n")
+                continue
+        return lives
+
+# MAKE SURE TO CHANGE THE ROUTE HERE, THIS PART IS UNFINISHED!!!!!
 def wood_woods_night_dark ():
-    os.system('cls')
-    print("COMING SOON")
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("The trail goes ever on. You try to count the time that's passed since you embarked from camp but with\n"
+          "the sun down, there's no point in trying.")
+    sleep(sec)
+    print("As long as you keep moving, you know you're making progress.")
+    # === DIALOGUE PORTION === #
+    if Ally != "To be decided":
+        print("You begin to stare at your feet, like your head was getting heavy. You're tired from what seems to be\n" 
+              "'hiker's hypnosis'.\n")
+        sleep(sec)
+        print(f"Just before you begin to sleep-walk, {Ally} taps on your helmet.")
+        # ========== Dialogue Time! =========== #
+        if Rogue == 1:
+            print(f"{Ally}: Hey, keep your head up man. You're awfully relaxed in these woods, do you not know what's\n"
+                  "out there?\n")
+            sleep(sec)
+            print(f"{Ally}: Whether you do or not, stay alert. Would it helped you if we talked about something?\n")
+            choice = input("How do you respond? [1. Yes / 2. No]: ")
+            if choice == "1":
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("\nYou heave your head up and nod weakly.")
+                sleep(sec)
+                print(f"\n{Ally}: Hmm, ok... How about... I ask you a question first, and then you ask me something?")
+                sleep(sec)
+                print(f"{Ally}: I probably should have asked this sooner, but who really are you?")
+                sleep(sec)
+                print("\nYou pause for a moment... who exactly are you? You had not thought about that much. Regardless, you\n"
+                      "try to explain to her...")
+                sleep(sec)
+                input("Press Enter to proceed: ")
+                os.system('cls' if os.name == 'nt' else 'clear')
+                # PLAYER CHARACTER INTRODUCTION
+                print(f"\nYou tell her that you are {Player_Name} heiled from the Kingdom of Wynveld. You were a former\n"
+                      "member of the kings direct guards, but after seeing the injustice of the monarchy and the crimes\n"
+                      "they let fly in favor of petty matters, you left to become a mercenary for the people and live a\n"
+                      "transient life on the road, wherever the road takes you.")
+                sleep(sec)
+                print("\nYou also mention to her that you like a nicely seasoned steak, playing chess, and long walks on\n"
+                "the beach.")
+                sleep(sec)
+                print(f"\n{Ally}: What a life, man. I respect the decision to help other people and take charge of things\n"
+                      "that bother you.")
+                sleep(sec)
+                print(f"{Ally}: Oh, and, do you take off the helmet ever? Can I see your face?")
+                sleep(sec)
+                print("You promptly shake your head no. The helmet never comes off.")
+                sleep(sec)
+                print(f"\n{Ally}: OK! ok... I won't ask again... Now I'm a rogue of my word, ask me something, {Player_Name}.")
+                sleep(sec)
+                while True:
+                    choice2 = input("\n[1. Who are you? ]\n[2. What do you like? ]\n[3. Do you know the blacksmith's daughter?]\n"
+                                    "How do you respond:")
+                    # Who are you?
+                    if choice2 == "1":
+                        print(f"\n{Ally}: You already know my name is Kanra. Besides that, I ended up getting separated from my family\n"
+                              "in a skirmish with the Kolutz raiders with no idea how my family faired. I was only 8 years old... I learned\n"
+                              "everything I know for the rogue path from previous adventures and others who made all the mistakes before me.\n")
+                        sleep(sec)
+                        print(f"{Ally}: I can't think of anything else I want to add... and no, I don't want to talk about those damn Kolutz scum...")
+                        break
+                    # What do you like?
+                    elif choice2 == "2":
+                        print(f"\n{Ally}: Silly question, but it's fair you ask.")
+                        sleep(sec)
+                        print(f"\n{Ally}: I like to hunt, I love animals, and I adore adventure. I'm not proud to admit it, but I also have a habit\n"
+                              "of being a pickpocket from time to time. No worries, it's just the wealthy I take from. It's not just for me though,\n"
+                              "Many others would find better use of their coin and trinkets than they would have the patience to find for themselves")
+                        sleep(sec)
+                        print(f"\n{Ally}: Now, being a pickpocket is a theif thing, not a rogue thing, let me get that straight... Although,\n"
+                              "I suppose that makes me a theif. Ehh, whatever.")
+                        break
+                    # Do you know the blacksmith's daughter
+                    elif choice2 == "3":
+                        print(f"\n{Ally}: Old Ivar's daughter? Not super well, but I can remember one of the rare times that man used her actual name.\n"
+                              "I believe it was Gwyndolin? I doubt that will be useful to you, but whatever.")
+                        sleep(sec)
+                        print(f"\n{Ally}: Before she disappeared, I can remember a time she threw a hose at Ivar and he panicked like he had a snake on\n"
+                              "his shoulders. Couldn't forget that.")
+                        break
+                    # Handle incorrect input
+                    else:
+                        print(f"\n{Ally}: Uh... Could you repeat that?")
+                        sleep(sec)
+                        continue
+                
+                print(f"\n{Ally}: I know this whole chat we had was to keep your sleepy head awake, but I enjoyed myself... Thanks...")
+ 
+            else:
+                print(f"{Ally}: No pressure... just be alert then. I know you didn't hire me to babysit you.")
+        if Chef == 1:
+            print(f"{Ally}: Mr. Knight! Don't doze off, are you mad!? I can't fend for myself out here if you fall asleep!")
+            sleep(sec)
+            print(f"{Ally}: Oh, I got a solution for you! Let's chat. That'll keep you on your feet. I haven't even asked who you\n"
+                  "are. You should introduce yourself. Now!")
+            sleep(sec)
+            print("\nYou pause for a moment... who exactly are you? You had not thought about that much.")
+            sleep(sec)
+            input("Press Enter to proceed: ")
+            # PLAYER CHARACTER INTRODUCTION
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print(f"\nYou tell him that you are {Player_Name} heiled from the Kingdom of Wynveld. You were a former\n"
+                   "member of the kings direct guards, but after seeing the injustice of the monarchy and the crimes\n"
+                   "they let fly in favor of petty matters, you left to become a mercenary for the people and live a\n"
+                   "transient life on the road, wherever the road takes you.")
+            sleep(sec)
+            print("\nYou also mention to him that you like a nicely seasoned steak, playing chess, and long walks on\n"
+                  "the beach.")
+            sleep(sec)
+            print(f"\n{Ally}: Good greif, What a hard lifestyle to give up! I can tell you this, it's so much livelier on\n"
+                  "an adventure. So much to learn and do, but most importantly, nothing like completing a quest and relaxing\n"
+                  "on the earnings! I'd argue it keeps ya humble!")
+            sleep(sec)
+            print(f"\n{Ally}: Also, is it fate that a steak lover teams up with a cook? I'd like to think so, ho-ho!")
+            sleep(sec)
+            print(f"\n{Ally}: Ok, I've asked the questions, surely your burning for an answer too! Ask me something Sir Knight!")
+            sleep(sec)
+            while True:
+                choice = input("\n[1. Who are you? ]\n[2. Why the chef life? ]\n[3. What's your favourite food? ]\nWhat do you ask him?: ")
+                # Who are you?
+                if choice == "1":
+                    print(f"\n{Ally}: I've already told you my name is Tonio, but if you need to hear my exquisite background, Let me\n"
+                          "start with this;")
+                    sleep(sec)
+                    print(f"\n{Ally}: I've been a cook for Drab Town as long as I can remember, but I was done working with potatos,\n"
+                          "Veggies and commoner food... I wanted to find richer things... Things that perfect even the blandest thing...\n"
+                          "By traveling with you, I have hope of finding the 'All-Seasoning'... One seasoning to rule them all and in\n"
+                          "consumerism bind them. I never want to taste dubious meals again!")
+                    sleep(sec)
+                    print(f"\n{Ally}: I've found two of the seasonings desired so far... Namely, Grinded up garlic, salt, and one more\n"
+                          "ingredient I shan't name, because a good chef never reveals his secret!")
+                    sleep(sec)
+                    break
+                # Why the chef life?
+                elif choice == "2":
+                    print(f"\n{Ally}: I come from a far land where a manhood was deemed worthy if said man could cook better than the others.\n"
+                          "The place I call home is known as the Caiman Peninsula. I still miss the taste of salt on a spit roasted sea bass...")
+                    sleep(sec)
+                    print(f"\n{Ally}: I'm after the all seasoning... I have two of the necessary ingredients for it but I missing just one more...\n")
+                    sleep(sec)
+                    print(f"\n{Ally}: What? No, I can't tell you what it is! A good chef keeps his secret ingredient a secret!")
+                    break
+                # What's your favourite food?
+                elif choice == "3":
+                    print(f"\n{Ally}: Are you kidding me? I couldn't decide what my favourite food is! I love it all!")
+                    sleep(sec)
+                    print(f"\n{Ally}: However, there is one thing I wouldn't mind having again. I think that would be the giant buffet kebab I had\n"
+                          "before I left home for spices, herbs, seasoning, and whatnot...")
+                    sleep(sec)
+                    break
+                # Handle exception
+                else:
+                    print(f"\n{Ally}: What was that, Mr. Sir Knight Guy?")
+                    continue
+            
+            print(f"\n{Ally}: Good chat, Sir {Player_Name}! I'll never hesitate to talk about the finest thing in life... Food!")
+
 
 # Cave
 def cave():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print(utils.UnderLN("The Cave"))
     print("\nCOMING SOON!")
 
 # Ruins
 def ruins():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print(utils.UnderLN("Ruins of Peculiarly Good Smells"))
     print("\nCOMING SOON!")
 
 # Sanctum
 def sanctum():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print(utils.UnderLN("Sanctum"))
     print("\nCOMING SOON!")
 
