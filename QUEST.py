@@ -42,8 +42,8 @@ lives = 3
 Player_Name = "Knight Guy"
 
 # ---------------- DEBUGGING ---------------- #
-DEBUG = True
-if DEBUG == False:
+DEBUG = False
+if DEBUG == True:
     sec = 0
 else:
     sec = 3
