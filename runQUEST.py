@@ -5,4 +5,4 @@
 
 import QUEST
 
-QUEST.wood_woods_night_torch()
+QUEST.drab_town()
