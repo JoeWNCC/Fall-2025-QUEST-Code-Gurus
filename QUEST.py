@@ -878,7 +878,7 @@ def wood_woods_wolf(lives):
                 sleep(sec)
                 print("Unfortunately, what was once stalking you is now bounding towards you. It gaining on you!")
                 sleep(sec)
-                chance = chance_50()
+                chance = chance_75()
                 if chance == 1:
                     print("\nIn your mad dash for survival, you notice the cave just ahead, across a cliff. With no better way\n"
                           "out of this predicament, you summon your courage...")
@@ -901,12 +901,14 @@ def wood_woods_wolf(lives):
                     print("\nCRUNCH!!!")
                     lives -= 1
                     sleep(sec)
+                    print(f"\nHEALTH REMAINING: {lives}/3")
 
                     # If you ran out of lives (Death)
                     if lives == 0:
+                        sleep(sec)
                         print("\nYou no longer have the strength to pry the beast off of you. As you begin lose consciousness, the monster\n"
                         "drags your fading body away into the woods...")
-                        sleep()
+                        sleep(sec)
                         input("\nPress Enter: ")
                         game_over()
                     
@@ -928,7 +930,7 @@ def wood_woods_wolf(lives):
             elif choice == "3":
                 print("\nYou instinctivly draw your weapon and swing hastily!")
                 sleep(sec)
-                chance = chance_75()
+                chance = chance_50()
                 if chance == 1:
                     print("\nYou slice the beast in the gut and it reels back and runs into the forest. Clearly, it made\n"
                     "a mistake picking a fight with you!")
@@ -1000,7 +1002,7 @@ def wood_woods_wolf(lives):
                 sleep(sec)
                 print("Unfortunately, what was once stalking you is now bounding towards you. It gaining on you!")
                 sleep(sec)
-                chance = chance_50()
+                chance = chance_75()
                 if chance == 1:
                     print("\nIn your mad dash for survival, you notice the cave just ahead, across a cliff. With no better way\n"
                           "out of this predicament, you summon your courage...")
@@ -1023,12 +1025,14 @@ def wood_woods_wolf(lives):
                     print("\nCRUNCH!!!")
                     lives -= 1
                     sleep(sec)
+                    print(f"\nHEALTH REMAINING: {lives}/3")
 
                     # If you ran out of lives (Death)
                     if lives == 0:
+                        sleep(sec)
                         print("\nYou no longer have the strength to pry the beast off of you. As you begin lose consciousness, the monster\n"
                         "drags your fading body away into the woods...")
-                        sleep()
+                        sleep(sec)
                         input("\nPress Enter: ")
                         game_over()
                     
@@ -1052,7 +1056,7 @@ def wood_woods_wolf(lives):
             elif choice == "3":
                 print("\nYou instinctivly draw your weapon and swing hastily!")
                 sleep(sec)
-                chance = chance_75()
+                chance = chance_50()
                 if chance == 1:
                     print("\nYou slice the beast in the gut and it reels back and runs into the forest. Clearly, it made\n"
                     "a mistake picking a fight with you!")
@@ -1101,7 +1105,7 @@ def wood_woods_wolf(lives):
                 sleep(sec)
                 print("Unfortunately, what was once stalking you is now bounding towards you. It gaining on you!")
                 sleep(sec)
-                chance = chance_50()
+                chance = chance_75()
                 if chance == 1:
                     print("\nIn your mad dash for survival, you notice the cave just ahead, across a cliff. With no better way\n"
                           "out of this predicament, you summon your courage...")
@@ -1124,12 +1128,14 @@ def wood_woods_wolf(lives):
                     print("\nCRUNCH!!!")
                     lives -= 1
                     sleep(sec)
+                    print(f"\nHEALTH REMAINING: {lives}/3")
 
                     # If you ran out of lives (Death)
                     if lives == 0:
+                        sleep(sec)
                         print("\nYou no longer have the strength to pry the beast off of you. As you begin lose consciousness, the monster\n"
                         "drags your fading body away into the woods...")
-                        sleep()
+                        sleep(sec)
                         input("Press Enter: ")
                         game_over()
                     
@@ -1188,7 +1194,7 @@ def wood_woods_wolf(lives):
                 sleep(sec)
                 print("Unfortunately, what was once stalking you is now bounding towards you. It gaining on you!")
                 sleep(sec)
-                chance = chance_50()
+                chance = chance_75()
                 if chance == 1:
                     print("\nIn your mad dash for survival, you notice the cave just ahead, across a cliff. With no better way\n"
                           "out of this predicament, you summon your courage...")
@@ -1211,12 +1217,14 @@ def wood_woods_wolf(lives):
                     print("\nCRUNCH!!!")
                     lives -= 1
                     sleep(sec)
+                    print(f"\nHEALTH REMAINING: {lives}/3")
 
                     # If you ran out of lives (Death)
                     if lives == 0:
+                        sleep(sec)
                         print("\nYou no longer have the strength to pry the beast off of you. As you begin lose consciousness, the monster\n"
                         "drags your fading body away into the woods...")
-                        sleep()
+                        sleep(sec)
                         input("\nPress Enter: ")
                         game_over()
                     
@@ -1238,7 +1246,7 @@ def wood_woods_wolf(lives):
             else:
                 print("\nWrong number input... try that again!\n")
                 continue
-        return lives
+        return lives, Scary_axe
 
 # MAKE SURE TO CHANGE THE ROUTE HERE, THIS PART IS UNFINISHED!!!!!
 def wood_woods_night_dark ():
