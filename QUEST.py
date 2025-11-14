@@ -43,7 +43,7 @@ Player_Name = "Knight Guy"
 
 # ---------------- DEBUGGING ---------------- #
 DEBUG = True
-if DEBUG == True:
+if DEBUG == False:
     sec = 0
 else:
     sec = 3
