@@ -385,7 +385,7 @@ def wood_woods_day_has_map():
           " like you got through this very well. The map follows into the mouth of the cave, so you summon your courage and disappear"
           " into the darkness of the path ahead...")
     sleep(sec)
-    proceed = input("\nPress anything to proceed: ")
+    input("\nPress enter to proceed: ")
     cave()
 
 # Start of Wood Woods
@@ -400,11 +400,11 @@ def wood_woods_day_trail():
     print("\nHours have passed, none you have kept track of, but suddenly, stifling the peace is a growl"
           " of a large creature...")
     sleep(sec)
-    wood_woods_lumberjack(lives) 
+    wood_woods_lumberjack() 
 
 # Initiate the lumberjack
-def wood_woods_lumberjack(lives):
-    global sword, has_map, rations, Rogue, Chef, Ally, Player_Name, sec, Stick, Neck_Cloth
+def wood_woods_lumberjack():
+    global sword, has_map, rations, Rogue, Chef, Ally, lives, Player_Name, sec, Stick, Neck_Cloth
     os.system('cls' if os.name == 'nt' else 'clear')
 
     # Debug Info
@@ -823,7 +823,7 @@ def wood_woods_night_torch():
             
             print(f"\n{Ally}: Good chat, Sir {Player_Name}! I'll never hesitate to talk about the finest thing in life... Food!")
 
-    print("\nAs time progressed, you began to notice that there was more leave crunching than there should be when you walked.\n"
+    print("\nAs time progressed, you began to notice that there was more leaves crunching than there should be when you walked.\n"
           "Everytime you stopped to check for it, there was no more sound. You felt a chill run down your spine.")
     sleep(sec)
     if Rogue == 1:
@@ -847,6 +847,7 @@ def wood_woods_night_torch():
             sleep(sec)
             print("From behind, a werewolf towers over you, right in front of where your standing. Waiting for sudden movement.")
             sleep(sec)
+            input("Press Enter to proceed: ")
             wood_woods_wolf(lives)
             break
 
@@ -869,7 +870,7 @@ def wood_woods_night_torch():
 
 # Fight method
 def wood_woods_wolf():
-    global sword, Scary_axe, rations, Rogue, Chef, Ally, Player_Name, sec, Stick, Werewolf
+    global sword, Scary_axe, rations, Rogue, Chef, Ally, Player_Name, lives, sec, Stick, Werewolf
     while True:
         # Menus/Actions
         # ================ You have weapon/or Stick ================ #
@@ -1415,6 +1416,11 @@ def wood_woods_night_dark():
                     continue
             
             print(f"\n{Ally}: Good chat, Sir {Player_Name}! I'll never hesitate to talk about the finest thing in life... Food!")
+            sleep(sec)
+            print("Through the peace of night, you made it to the cave with no incident.")
+            sleep(sec)
+            input("Press enter to proceed: ")
+            cave()
 
 # ========== CAVE ========== #
 # Cave
