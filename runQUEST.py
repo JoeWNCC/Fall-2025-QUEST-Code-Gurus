@@ -5,4 +5,4 @@
 
 import QUEST
 
-QUEST.cave()
+QUEST.drab_town()
