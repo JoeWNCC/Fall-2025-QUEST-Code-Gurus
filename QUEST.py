@@ -848,7 +848,7 @@ def wood_woods_night_torch():
             print("From behind, a werewolf towers over you, right in front of where your standing. Waiting for sudden movement.")
             sleep(sec)
             input("Press Enter to proceed: ")
-            wood_woods_wolf(lives)
+            wood_woods_wolf()
             break
 
         # Keep moving
