@@ -32,12 +32,17 @@ rations = 0
 Rogue = 0
 Chef = 0
 Werewolf = False
+# Do not change the initial string of Ally
 Ally = "To be decided"
 
 # Event Variables
 Focus = False
 chance = 0
 lives = 3
+enemy_health = 0
+# PathChoices keeps track of which paths were correct in the cave IF you have the rogue.
+# Combo is Right, Straight, Left, Left
+PathChoices = ["Unknown", "Unknown", "Unknown", "Unknown"]
 
 Player_Name = "Knight Guy"
 
@@ -47,7 +52,7 @@ if DEBUG == True:
     sec = 0
 else:
     sec = 3
-# ---------------- DEBUGGING ---------------- #
+# ------------------------------------------- #
 
 
 # ----- CHANCE FUNCTIONS ----- #
@@ -60,8 +65,10 @@ def chance_50():
 def chance_75():
     random = randint(1, 4)
     return random
+# ---------------------------- #
 
-# ----- PLACES ----- #
+# ===================== AREAS/PLACES/MAIN GAME ===================== #
+# Start/Setup
 def drab_town():
     global sword, has_map, rations, Rogue, Chef, Ally, Player_Name, sec, lives
 
@@ -308,6 +315,7 @@ def drab_town():
     else:
         return sword, has_map, rations
 
+# ========== WOOD WOODS [DAY] ========== #
 # Make choice Map/Trail
 def wood_woods_day_choice():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -495,7 +503,7 @@ def wood_woods_lumberjack(lives):
                         print(f"\n{Ally}: Take this real quick! It's a salve, something my mama came up with!")
                         if lives < 3:
                             lives += 1
-                        print("\nIt's a hastily put together first-aid kit. It's convenient but we've already lost our ally... Dang it...")
+                        print("\nIt's a hastily put together first-aid kit. Very convenient!")
                         print(f"HEALTH REMAINING: {lives}/3")
                 except:
                     pass
@@ -609,7 +617,7 @@ def wood_woods_lumberjack_intro():
     input("\nPress any button to continue: ")
     cave()
 
-
+# ========== WOOD WOODS [NIGHT] ========== #
 # Start Wood Woods at Night
 def wood_woods_night():
     global sword, has_map, rations, Rogue, Chef, Ally, Player_Name, sec, Stick, Neck_Cloth
@@ -618,7 +626,7 @@ def wood_woods_night():
         print("\n================= DEBUGGING =================\n")
         print(f"DEBUG: sword={sword}, has_map={has_map}, rations={rations}, Rogue={Rogue}, Chef={Chef}, Lives={lives}")
         print("\n================= DEBUGGING =================\n")
-    
+    os.system('cls' if os.name == 'nt' else 'clear')
     print(utils.UnderLN("\nWood Woods"))
     sleep(sec)
     print("It's dark out. Very dark out, but nonetheless your spirits remain high. As far as you can see, it's just tall trees\n"
@@ -655,6 +663,7 @@ def wood_woods_night():
         input("\nPress anything to proceed: ")
         wood_woods_night_dark()
 
+# Torch Route
 def wood_woods_night_torch():
     os.system('cls' if os.name == 'nt' else 'clear')
     print("The trail goes ever on. You try to count the time that's passed since you embarked from camp but with\n"
@@ -858,7 +867,8 @@ def wood_woods_night_torch():
             print("\nThat's not a choice!\n")
             continue
 
-def wood_woods_wolf(lives):
+# Fight method
+def wood_woods_wolf():
     global sword, Scary_axe, rations, Rogue, Chef, Ally, Player_Name, sec, Stick, Werewolf
     while True:
         # Menus/Actions
@@ -1246,10 +1256,10 @@ def wood_woods_wolf(lives):
             else:
                 print("\nWrong number input... try that again!\n")
                 continue
-        return lives, Scary_axe
+        return lives, Scary_axe, Stick
 
-# MAKE SURE TO CHANGE THE ROUTE HERE, THIS PART IS UNFINISHED!!!!!
-def wood_woods_night_dark ():
+# Night Route
+def wood_woods_night_dark():
     os.system('cls' if os.name == 'nt' else 'clear')
     print("The trail goes ever on. You try to count the time that's passed since you embarked from camp but with\n"
           "the sun down, there's no point in trying.")
@@ -1406,25 +1416,506 @@ def wood_woods_night_dark ():
             
             print(f"\n{Ally}: Good chat, Sir {Player_Name}! I'll never hesitate to talk about the finest thing in life... Food!")
 
-
+# ========== CAVE ========== #
 # Cave
 def cave():
     os.system('cls' if os.name == 'nt' else 'clear')
     print(utils.UnderLN("The Cave"))
-    print("\nCOMING SOON!")
+    sleep(sec)
+    print("\nThe darkness in front of you grows, the light from behind recedes. At this point in the quest, the path is a mystery.")
+    sleep(sec)
+    if has_map == 1:
+        print("The path on the map leads to the ruins, but unfortunately does not list the cave directions, only that you go through here.")
+        sleep(sec)
+        print("Not very helpful...")
+        sleep(sec)
+    else:
+        print("Whatever way you go, from here it's about trusting your gut.")
+        sleep(sec)
+    print("\nAfter walking some distance in the cave, you've arrive at a three way fork, unfortunately. Initially, there are no giveaways for\n"
+          "which trail leads to the other sides...")
+    sleep(sec)
+    print("\nLooks like we are going to have to guess the right path.")
+    sleep(sec)
+    if Rogue == 1:
+        print(f"\nKANRA: Hey, not sure if I'll be too much help now, but I will try to keep tabs on the path we take as we move. Best thing to do\n"
+              "for now is pick a path and find the way from there.")
+        sleep(sec)
+    input("\nPress enter to proceed: ")
+    cave1()
 
+# Cave fight
+def caveFight():
+    global sword, rations, Chef, Ally, Player_Name, sec, Stick, lives, Neck_Cloth, enemy_health
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("...")
+    sleep(sec)
+    print("\nSomething is wrong... You're being followed.")
+    sleep(sec)
+    print("\nYou turn around and to your surprise, it's a skeleton brandishing a curved sword!")
+    sleep(sec)
+    print("\n???: FoOLIsH kNiGhT, HaVe ThEE cOmE tO ExPaNd oUR StAsH oF wEAlTh? HAnd iT OvEr!")
+    sleep(sec)
+    if Werewolf == True:
+        print("\nThe beast you tamed from the forest walks to your side, determined to prove to you it's power.\n"
+        "Looks like you're not fighting alone!")
+        sleep(sec)
+    input("Press Enter to proceed: ")
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(f"\n- = [ FIGHT ] = -")
+    enemy_health = 2
+    # ========== FIGHT LOOP ============ #
+    while True:
+        # ===== YOUR TURN ===== #
+        # If you have a neck scarf and a stick
+        if Neck_Cloth > 0 and Stick > 0:
+            action = input("\n    [1. Attack   ]\n    [2. Run      ]\n    [3. Light Torch]\nWhat will you do?: ")
+            # Attack
+            if action == "1":
+                if sword == 1 or Scary_axe == 1:
+                    crit = chance_75()
+                    if crit == 4:
+                        print("\nYou draw your blade calmly. As the skeleton jumps at you for a lethal blow...")
+                        sleep(sec)
+                        print("\n CLANG!")
+                        enemy_health = 0
+                        sleep(sec)
+                        print("\nYou parry the sword of the evil being away from its hand and return a fierce, shattering strike that\n"
+                              "pulverizes it instantly.")
+                        sleep(sec)
+                        print("\nAnd just like that, the battle is over.")
+                        sleep(sec)
+                        print("\n- = [ YOU WIN ] = -")
+                        input("Press enter to proceed: ")
+                        break
+                    elif crit > 1:
+                        print("\nYou swipe your weapon vigorously at the monster!")
+                        sleep(sec)
+                        enemy_health -= 1
+                        print("\nYou struck it in the rib!")
+                        sleep(sec)
+                        if enemy_health > 0:
+                            print(f"\nSKELETON HEALTH: {enemy_health}")
+                            sleep(sec)
+                            print("\nThe skeleton still stands!")
+                            sleep(sec)
+                        else:
+                            print("\nThe figure takes a few steps back...")
+                            sleep(sec)
+                            print("Suddenly, it begins to turn to dust.")
+                            sleep(sec)
+                            print("\n???: GnnNNnngh... dOn't tHInk tHIs Is OVer, kNIGht! tHEre ArE mORe oF ME!")
+                            sleep(sec)
+                            print("\n- = [ YOU WIN ] = -")
+                            input("Press enter to proceed: ")
+                            break
+                    else:
+                        print("\nYou swing your weapon vigorously at the monster!")
+                        sleep(sec)
+                        print("\nYou... Missed!")
+                        sleep(sec)
+                else:
+                    attack = chance_75()
+                    if attack > 1:
+                        print("You throw a punch vigorously at the monster!")
+                        sleep(sec)
+                        print("\nYou struck it in the skull!")
+                        enemy_health -= 1
+                        sleep(sec)
+                        if enemy_health > 0:
+                            print(f"\nSKELETON HEALTH: {enemy_health}")
+                            sleep(sec)
+                            print("\nThe skeleton still stands!")
+                            sleep(sec)
+                        else:
+                            print("\nThe figure takes a few steps back...")
+                            sleep(sec)
+                            print("Suddenly, it begins to turn to dust.")
+                            sleep(sec)
+                            print("\n???: GnnNNnngh... dOn't tHInk tHIs Is OVer, kNIGht! tHEre ArE mORe oF ME!")
+                            sleep(sec)
+                            print("\n- = [ YOU WIN ] = -")
+                            input("Press enter to proceed: ")
+                            break
+                    else:
+                        print("You swing your arm vigorously at the monster!")
+                        sleep(sec)
+                        print("You... Missed!")
+                        sleep(sec)
+            # Run
+            elif action == "2":
+                print(f"You do NOT want to mess around with that scimitar. You attempt to flee...")
+                sleep(sec)
+                chance = chance_50()
+                if chance == 1:
+                    print("\nYou struggle against the dark cave walls, but manage to lose the skeleton!\n"
+                    "You can still hear his greedy taunts as you disappear into the dark.")
+                    break
+                else:
+                    print("\nBut you run into a wall. You seem to struggle to find the way out in this darkness.")
+                    sleep(sec)
+            # Torch attack
+            elif action == "3":
+                print("\nYou're not sure how this will work, but you frantically light your torch.")
+                Neck_Cloth -= 1
+                Stick -= 1
+                sleep(sec)
+                print("\nImmediately, the skeleton reels back from the light, dragging itself along the walls in search of shade.")
+                sleep(sec)
+                print("\n???: AUGH! nOt tHE lIGHt! cURSe yOu, cRAFtY mEtAl cAN!")
+                sleep(sec)
+            # Misinput
+            else:
+                print("\n ! That's not an action !\n")
+                continue
+        # No special items
+        else:
+            action = input("\n    [1. Attack   ]\n    [2. Run      ]\nWhat will you do?: ")
+            # Attack
+            if action == "1":
+                if sword == 1 or Scary_axe == 1:
+                    crit = chance_75()
+                    if crit == 4:
+                        print("\nYou draw your blade calmly. As the skeleton jumps at you for a lethal blow...")
+                        sleep(sec)
+                        print("\n CLANG!")
+                        enemy_health = 0
+                        sleep(sec)
+                        print("\nYou parry the sword of the evil being away from its hand and return a fierce, shattering strike that\n"
+                              "pulverizes it instantly.")
+                        sleep(sec)
+                        print("\nAnd just like that, the battle is over.")
+                        sleep(sec)
+                        print("\n- = [ YOU WIN ] = -")
+                        input("Press enter to proceed: ")
+                        break
+                    elif crit > 1:
+                        print("\nYou swipe your weapon vigorously at the monster!")
+                        sleep(sec)
+                        print("\nYou struck it in the rib!")
+                        enemy_health -= 1
+                        sleep(sec)
+                        if enemy_health > 0:
+                            print(f"\nSKELETON HEALTH: {enemy_health}")
+                            sleep(sec)
+                            print("\nThe skeleton still stands!")
+                            sleep(sec)
+                        else:
+                            print("\nThe figure takes a few steps back...")
+                            sleep(sec)
+                            print("\nSuddenly, it begins to turn to dust.")
+                            sleep(sec)
+                            print("\n???: GnnNNnngh... dOn't tHInk tHIs Is OVer, kNIGht! tHEre ArE mORe oF ME!")
+                            sleep(sec)
+                            print("\n- = [ YOU WIN ] = -")
+                            input("Press enter to proceed: ")
+                            break
+                    else:
+                        print("\nYou swing your weapon vigorously at the monster!")
+                        sleep(sec)
+                        print("\nYou... Missed!")
+                        sleep(sec)
+                else:
+                    attack = chance_75()
+                    if attack > 1:
+                        print("You throw a punch vigorously at the monster!")
+                        sleep(sec)
+                        print("\nYou struck it in the skull!")
+                        enemy_health -= 1
+                        sleep(sec)
+                        if enemy_health > 0:
+                            print(f"\nSKELETON HEALTH: {enemy_health}")
+                            sleep(sec)
+                            print("\nThe skeleton still stands!")
+                            sleep(sec)
+                        else:
+                            print("\nThe figure takes a few steps back...")
+                            sleep(sec)
+                            print("Suddenly, it begins to turn to dust.")
+                            sleep(sec)
+                            print("\n???: GnnNNnngh... dOn't tHInk tHIs Is OVer, kNIGht! tHEre ArE mORe oF ME!")
+                            sleep(sec)
+                            print("\n- = [ YOU WIN ] = -")
+                            input("Press enter to proceed: ")
+                            break
+                    else:
+                        print("You swing your arm vigorously at the monster!")
+                        sleep(sec)
+                        print("You... Missed!")
+                        sleep(sec)
+            # Run
+            elif action == "2":
+                print(f"\nYou do NOT want to mess around with that scimitar. You attempt to flee...")
+                sleep(sec)
+                chance = chance_50()
+                if chance == 1:
+                    print("\nYou struggle against the dark cave walls, but manage to lose the skeleton!\n"
+                    "You can still hear his greedy taunts as you disappear into the dark.")
+                    break
+                else:
+                    print("\nBut you run into a wall. You seem to struggle to find the way out in this darkness.")
+                    sleep(sec)
+            # Misinput
+            else:
+                print("\n ! That's not an action !\n")
+                continue
+
+        # ===== ENEMY TURN ===== #
+        print("The greedy figure grips the shaft of his blade with two hands and dances with it towards you!")
+        sleep(sec)
+        chance = chance_50()
+        if chance == 1:
+            print("\nCHINK!")
+            sleep(sec)
+            if lives > 1:
+                lives -= 1
+                print(f"\nThe bastard nicked you in several places! [HEALTH REMAINING: {lives}/3]")
+                sleep(sec)
+            elif lives == 0:
+                print("\nTwo many cuts... You struggle to keep yourself upright.")
+                sleep(sec)
+                print("\nWhen you meet the evil creatures eye sockets, he glares back and smirks, no remorse in what he's about to do.")
+                sleep(sec)
+                print("\nA heavy blow to the side of the head knocks you out cold, Now lost to the darkness...")
+                sleep(sec)
+                game_over()
+        else:
+            print("\nSwift reflexes bring your sword up to meet the blade of the skeleton. You block the attack!")
+            sleep(sec)
+
+        # ===== WEREWOLF'S TURN ===== #
+        if Werewolf == True:
+            print("\nThe werewolf bares it's fangs and lunges at the skeleton!")
+            sleep(sec)
+            chance = chance_75()
+            if chance > 1:
+                print("\nThe wolf tears through the skeleton easily. Given that this opponent is free advertising for bones, you're not\n"
+                      "really that surprised.")
+                enemy_health = 0
+                sleep(sec)
+                print("\nYou walk over to its head and pat it, asking it whose a good boy.")
+                sleep(sec)
+                print("\n- = [ YOU WON ] = -")
+                input("Press enter to proceed: ")
+                break
+            else:
+                print("\nThe skeleton is able to barely dive away from the giant wolf.")
+                sleep(sec)
+                print("The being is still fixated on you!")
+                sleep(sec)
+    # Heal if you took damage
+    if rations > 0 and lives < 3:
+        if Chef == 1:
+            print(f"\nTONIO: Good god what a ghastly sight! Sir Knight {Player_Name}! I can already see that you took\n"
+                  "a good hit from that wicked blade, let me help you my good sir!")
+            sleep(sec)
+            rations -= 1
+            print(f"\nUsing your ration [{rations}/3 rations] he creates a healing stew. You're not sure how, but anything is better\n"
+            "than bleeding out. You are thankful.")
+            sleep(sec)
+            lives = 3
+            print(f"\nYOUR HEALTH: {lives}/3")
+            sleep(sec)
+        else:
+            print(f"\nYou do what you can to make your rations heal you. You feel a bit better filling your stomach up after a\n" \
+                f"long journey. [{rations}/3 rations]")
+            sleep(sec)
+            lives += 1
+            print(f"\nYOUR HEALTH: {lives}/3")
+            sleep(sec)
+            rations -= 1
+        input("\nPress enter to continue: ")
+    return Stick, Neck_Cloth, lives, enemy_health, rations    
+
+# Cave wrong way
+def caveWrong():
+    global PathChoices
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("...")
+    sleep(sec)
+    print("\nOh no... You've been here before.")
+    sleep(sec)
+    print("\nIt's the start of the cave. You'll need to take a different path than that one to find the way out.")
+    sleep(sec)
+    if Rogue == 1 and "Right" in PathChoices:
+        print(f"\nKANRA: Hey {Player_Name}, I've been keeping track of what seems to bring us closer to the exit. So far,\n"
+              f"{PathChoices} seems to be the route of progress.")
+    else:
+        pass
+    cave1()
+    return PathChoices
+
+def cave1():
+    global PathChoices
+    choice = input("\n    [1. Left    ]\n    [2. Straight]\n    [3. Right   ]\nSo which way forward?: ")
+    while True:
+        if choice == "1" or choice == "2":
+            chance = chance_75()
+            if chance == 4:
+                caveFight()
+                caveWrong()
+            else:
+                caveWrong()
+                pass
+        if choice == "3":
+            PathChoices[0] = "Right"
+            chance = chance_75()
+            if chance == 4:
+                caveFight()
+            else:
+                pass
+            break
+        else:
+            print("\nThat's not a direction!")
+            sleep(sec)
+            continue
+    cave2()
+    return PathChoices
+
+def cave2():
+    global PathChoices
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("...")
+    sleep(sec)
+    print("\nYou feel like you've made progress.")
+    sleep(sec)
+    print("\nYou think you might be hearing a stream and the air rushing through the cave, but you can't pin\n"
+    "where it's from.")
+    sleep(sec)
+    
+    choice = input("\n    [1. Left    ]\n    [2. Straight]\n    [3. Right   ]\nSo which way forward?: ")
+    while True:
+        if choice == "1" or choice == "3":
+            chance = chance_75()
+            if chance == 4:
+                caveFight()
+                caveWrong()
+            else:
+                caveWrong()
+                pass
+        if choice == "2":
+            PathChoices[1] = "Straight"
+            chance = chance_75()
+            if chance == 4:
+                caveFight()
+            else:
+                pass
+            break
+        else:
+            print("\nThat's not a direction!")
+            sleep(sec)
+            continue
+    cave3()
+    return PathChoices
+
+def cave3():
+    global PathChoices
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("...")
+    sleep(sec)
+    print("\nYou feel like you've made more progress.")
+    sleep(sec)
+    print("\nThat's gotta be the stream! you can also hear the air traveling better. Only problem is to the right appears to\n"
+          "be where the stream is coming from and to the left is where the wind blows.")
+    sleep(sec)
+    choice = input("\n    [1. Left    ]\n    [2. Straight]\n    [3. Right   ]\nSo which way forward?: ")
+    while True:
+        if choice == "2" or choice == "3":
+            chance = chance_75()
+            if chance == 4:
+                caveFight()
+                caveWrong()
+            else:
+                caveWrong()
+                pass
+        if choice == "1":
+            PathChoices[2] = "Left"
+            chance = chance_75()
+            if chance == 4:
+                caveFight()
+            else:
+                pass
+            break
+        else:
+            print("\nThat's not a direction!")
+            sleep(sec)
+            continue
+    cave4()
+    return PathChoices
+
+def cave4():
+    global PathChoices
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("...")
+    sleep(sec)
+    print("\nYou feel like you've made progress.")
+    sleep(sec)
+    print("\nMuch to your dismay, the sounds suddenly stopped. You're not sure why, but let's make this choice count.")
+    sleep(sec)
+    
+    choice = input("\n    [1. Left    ]\n    [2. Straight]\n    [3. Right   ]\nSo which way forward?: ")
+    while True:
+        if choice == "2" or choice == "3":
+            chance = chance_75()
+            if chance == 4:
+                caveFight()
+                caveWrong()
+            else:
+                caveWrong()
+                pass
+        if choice == "1":
+            PathChoices[3] = "Left"
+            chance = chance_75()
+            if chance == 4:
+                caveFight()
+            else:
+                pass
+            break
+        else:
+            print("\nThat's not a direction!")
+            sleep(sec)
+            continue
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("...")
+    sleep(sec)
+    print("\nYou feel like these caves never end. This might have been a mistake. What are you doing here!? Why would Ivar's\n"
+          "daughter even think about going through here!?")
+    sleep(sec)
+    print("\nJust as you begin to lose hope...")
+    sleep(sec)
+    print("\nThe floor crumbles below you!")
+    sleep(sec)
+    print("\nThis was, however, not a far fall.")
+    sleep(sec)
+    print("\nAs you got up, you first noticed the crisp smell of the air from the trees, then the light, and\n"
+          "finally, the ruins looming in front of you!")
+    sleep(sec)
+    print("You did it!  You actually did it!")
+    sleep(sec)
+    input("Press enter to move on: ")
+    ruins()
+    return PathChoices
+
+# ========== RUINS ========== #
 # Ruins
 def ruins():
     os.system('cls' if os.name == 'nt' else 'clear')
-    print(utils.UnderLN("Ruins of Peculiarly Good Smells"))
+    print(utils.UnderLN("Ruins"))
+    sleep(sec)
     print("\nCOMING SOON!")
+    sleep(sec)
+    os._exit(200)
 
+# ========== SANCTUM ========== #
 # Sanctum
 def sanctum():
     os.system('cls' if os.name == 'nt' else 'clear')
     print(utils.UnderLN("Sanctum"))
     print("\nCOMING SOON!")
 
+# ========== Other methods ========== #
+# Death
 def game_over():
     utils.title("YOU HAVE FALLEN...")
-    os._exit()
+    sleep(sec)
+    os._exit(200)
