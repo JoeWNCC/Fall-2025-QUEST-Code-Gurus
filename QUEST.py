@@ -400,6 +400,7 @@ def wood_woods_day_trail():
     print("\nHours have passed, none you have kept track of, but suddenly, stifling the peace is a growl"
           " of a large creature...")
     sleep(sec)
+    input("Press enter to proceed: ")
     wood_woods_lumberjack() 
 
 # Initiate the lumberjack
